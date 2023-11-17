@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="ISSV.Views.MapPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:ISSV.Core.Models"
+    Style="{StaticResource PageStyle}"
+    xmlns:behaviors="using:ISSV.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
+    mc:Ignorable="d">
+
+    <Grid>
+        <CommandBar
+            IsOpen="False"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            DefaultLabelPosition="Right"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="1">
+            <AppBarButton Icon="Filter" Label="Filter" IsCompact="True" Click="AppBarButton_Click"/>
+        </CommandBar>
+        <SplitView
+            x:Name="MapSplitView"
+            Grid.Row="1"
+            IsPaneOpen="False"
+            DisplayMode="Overlay"
+            PaneBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            PanePlacement="Right">
+            <SplitView.Pane>
+                <winui:TreeView
+                    ItemsSource="{x:Bind Source}"
+                    Margin="0,48,0,0"
+                    SelectionMode="Multiple">
+                    <winui:TreeView.ItemTemplate>
+                        <DataTemplate x:DataType="models:SampleCompany">
+                            <winui:TreeViewItem
+                        Content="{x:Bind CompanyName}" />
+                        </DataTemplate> 
+                    </winui:TreeView.ItemTemplate>
+                </winui:TreeView>
+            </SplitView.Pane>
+            <maps:MapControl
+                x:Name="mapControl"
+                MapServiceToken="Kpch28g23Cnw6xNVbP7t~SATgK5XNhqcC5ZyUiA51BA~Akzl5DFqB3j9vskTvi1Qy8hYsX-G27CZSnfBO3LaStB-QQAqKLB6n0eYZCblPBr4"
+                ColorScheme="{x:Bind MapColorScheme, Mode=OneWay}"
+                ZoomLevel="{x:Bind ZoomLevel, Mode=OneWay}"
+                Center="{x:Bind Center, Mode=OneWay}" />
+        </SplitView>
+    </Grid>
+</Page>
