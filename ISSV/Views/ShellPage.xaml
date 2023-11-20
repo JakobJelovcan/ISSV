@@ -17,19 +17,27 @@
             <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border
+        <Grid
             x:Name="AppTitleBar"
             IsHitTestVisible="True"
             VerticalAlignment="Top"
             Background="Transparent"
             Height="{Binding ElementName=navigationView, Path=CompactPaneLength}"
             Canvas.ZIndex="1">
-                    <TextBlock
-                        x:Name="AppTitle"
-                        Text="{x:Bind GetAppTitleFromSystem()}"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource CaptionTextBlockStyle}" />
-        </Border>
+            <TextBlock
+                x:Name="AppTitle"
+                Text="{x:Bind GetAppTitleFromSystem()}"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}" />
+            <winui:InfoBar
+                x:Name="AppInfobar"
+                Margin="114,0,0,0"
+                IsOpen="False"
+                IsClosable="False"
+                Severity="Error"
+                VerticalAlignment="Stretch"
+                />
+        </Grid>
         <winui:NavigationView
             x:Name="navigationView"
             Canvas.ZIndex="0"
@@ -52,7 +60,7 @@
                 Or to use an IconElement instead of a Symbol see https://github.com/microsoft/TemplateStudio/blob/main/docs/UWP/projectTypes/navigationpane.md
                 Edit String/en-US/Resources.resw: Add a menu item title for each page
                 -->
-                <winui:NavigationViewItem x:Uid="Shell_Main" Icon="Contact" helpers:NavHelper.NavigateTo="views:MainPage" />
+                <winui:NavigationViewItem x:Uid="Shell_Main" Icon="Contact" helpers:NavHelper.NavigateTo="views:CustomerPage" />
                 <winui:NavigationViewItem x:Uid="Shell_Map" Icon="MapPin" helpers:NavHelper.NavigateTo="views:MapPage" />
             </winui:NavigationView.MenuItems>
             <i:Interaction.Behaviors>

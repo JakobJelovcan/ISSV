@@ -1,9 +1,8 @@
-﻿using System;
+﻿using ISSV.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using ISSV.Core.Models;
 
 namespace ISSV.Core.Services
 {
@@ -13,9 +12,11 @@ namespace ISSV.Core.Services
     // 2. Models/SampleCompany.cs
     // 3. Models/SampleOrder.cs
     // 4. Models/SampleOrderDetail.cs
-    public static class SampleDataService
+    public static class DataService
     {
         private static IEnumerable<SampleOrder> _allOrders;
+
+        private static IDictionary<string, MapAddress> _addresses;
 
         private static IEnumerable<SampleOrder> AllOrders()
         {
@@ -496,6 +497,71 @@ namespace ISSV.Core.Services
 
             await Task.CompletedTask;
             return _allOrders;
+        }
+
+        public static async Task<bool> UpdateCustomer(Customer customer, string name, string phoneNumber, string email, string address, bool active)
+        {
+            return await SqlServerDataService.UpdateCustomer(customer, name, phoneNumber, email, address, active);
+        }
+
+        public static async Task<bool> UpdateLocation(Location location, string name, string address, string phoneNumber, string email, bool active)
+        {
+            return await SqlServerDataService.UpdateLocation(location, name, phoneNumber, email, address, active);
+        }
+
+        public static async Task<bool> UpdateDevice(Device device, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
+        {
+            return await SqlServerDataService.UpdateDevice(device, deviceType, serialNumber, active, maintenanceFrequency, warrantyPeriod, installationDate);
+        }
+
+        public static async Task<bool> UpdateMaintenance(Maintenance maintenance, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
+        {
+            return await SqlServerDataService.UpdateMaintenance(maintenance, date, reason, workDone, notes, workOrder, repairman, regularMaintenance);
+        }
+
+        public static async Task<Customer> InsertCustomer(string name, string phoneNumber, string email, string address, bool active)
+        {
+            return await SqlServerDataService.InsertCustomer(name, phoneNumber, email, address, active);
+        }
+
+        public static async Task<Location> InsertLocation(int customerId, string name, string address, string phoneNumber, string email, bool active)
+        {
+            return await SqlServerDataService.InsertLocation(customerId, name, address, phoneNumber, email, active);
+        }
+
+        public static async Task<Device> InsertDevice(int locationId, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
+        {
+            return await SqlServerDataService.InsertDevice(locationId, deviceType, serialNumber, active, maintenanceFrequency, warrantyPeriod, installationDate);
+        }
+
+        public static async Task<Maintenance> InsertMaintenance(int deviceId, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
+        {
+            return await SqlServerDataService.InsertMaintenance(deviceId, date, reason, workDone, notes, workOrder, repairman, regularMaintenance);
+        }
+
+        public static async Task<MapAddress> InsertMapAddress(string address, double latitude, double longitude)
+        {
+            return await SqlServerDataService.InsertMapAddress(address, latitude, longitude);
+        }
+
+        public static async Task DeleteCustomer(int id)
+        {
+            await SqlServerDataService.DeleteCustomer(id);
+        }
+
+        public static async Task DeleteLocation(int id)
+        {
+            await SqlServerDataService.DeleteLocation(id);
+        }
+
+        public static async Task DeleteDevice(int id)
+        {
+            await SqlServerDataService.DeleteDevice(id);
+        }
+
+        public static async Task DeleteMaintenance(int id)
+        {
+            await SqlServerDataService.DeleteMaintenance(id);
         }
     }
 }

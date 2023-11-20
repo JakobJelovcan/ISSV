@@ -7,7 +7,7 @@ namespace ISSV.Core.Models
 {
     public class Maintenance : INotifyPropertyChanged
     {
-        public Maintenance(int id, int deviceId, DateTime date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
+        public Maintenance(int id, int deviceId, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
         {
             Id = id;
             DeviceId = deviceId;
@@ -24,7 +24,7 @@ namespace ISSV.Core.Models
 
         public int DeviceId { get; private set; }
 
-        public DateTime Date
+        public DateTimeOffset Date
         {
             get { return date; }
             set
@@ -36,7 +36,7 @@ namespace ISSV.Core.Models
                 }
             }
         }
-        private DateTime date;
+        private DateTimeOffset date;
 
         public string Reason
         {

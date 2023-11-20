@@ -28,13 +28,6 @@ namespace ISSV.Services
 
         public static async Task BuildCacheAsync()
         {
-            var addresses = await SqlServerDataService.GetAllAddressesAsync();
-            var mapLocations = await Task.WhenAll(addresses.Select(async a => (a, await FindMapLocationAsync(a))));
-
-            foreach (var mapLocation in mapLocations)
-            {
-                mapLocationCache.Add(mapLocation.a, mapLocation.Item2);
-            }
         }
 
         public static async Task<MapLocation> GetMapLocationAsync(string address)

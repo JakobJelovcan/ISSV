@@ -1,0 +1,54 @@
+﻿<ContentDialog
+    x:Class="ISSV.Dialogs.DeviceContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ISSV.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Title="TITLE"
+    DefaultButton="Primary"
+    PrimaryButtonText="Confirm"
+    CloseButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    CloseButtonClick="ContentDialog_CloseButtonClick">
+
+    <Grid>
+        <StackPanel>
+            <TextBox
+                Header="Device type"
+                Text="{x:Bind DeviceType, Mode=TwoWay}" />
+
+            <TextBox
+                Header="Serial number"
+                Text="{x:Bind SerialNumber, Mode=TwoWay}" />
+
+            <winui:NumberBox
+                Header="Maintenance frequency"
+                Minimum="0"
+                PlaceholderText="Months"
+                SpinButtonPlacementMode="Inline"
+                SmallChange="1"
+                LargeChange="12"
+                Value="{x:Bind MaintenanceFrequency, Mode=TwoWay}" />
+
+            <winui:NumberBox
+                Header="Warranty period"
+                Minimum="0"
+                SpinButtonPlacementMode="Inline"
+                SmallChange="1"
+                LargeChange="12"
+                PlaceholderText="Months"
+                Value="{x:Bind WarrantyPeriod, Mode=TwoWay}" />
+
+            <DatePicker
+                Header="Installation date"
+                Date="{x:Bind InstallationDate, Mode=TwoWay}" />
+
+            <CheckBox
+                Content="Active"
+                IsChecked="{x:Bind Active, Mode=TwoWay}" />
+        </StackPanel>
+    </Grid>
+</ContentDialog>

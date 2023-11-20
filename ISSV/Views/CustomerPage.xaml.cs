@@ -1,5 +1,6 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,18 +11,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ISSV.Views
 {
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class CustomerPage : Page, INotifyPropertyChanged
     {
         public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
 
-        public MainPage()
+        public CustomerPage()
         {
             InitializeComponent();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            var data = await SampleDataService.GetContentListDataAsync();
+            var data = await DataService.GetContentListDataAsync();
             foreach (var item in data)
             {
                 Source.Add(item);
@@ -43,17 +44,22 @@ namespace ISSV.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void AddCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AddCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            CustomerContentDialog customerDialog = new CustomerContentDialog(null);
+            await customerDialog.ShowAsync();
         }
 
-        private void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            if (sender is MenuFlyoutItem flyoutItem && flyoutItem.DataContext is Customer customer)
+            {
+                CustomerContentDialog customerDialog = new CustomerContentDialog(customer);
+                await customerDialog.ShowAsync();
+            }
         }
 
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
         }

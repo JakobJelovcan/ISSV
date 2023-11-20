@@ -8,7 +8,7 @@ namespace ISSV.Core.Models
 {
     public class Device : INotifyPropertyChanged
     {
-        public Device(int id, int locationId, string deviceType, string serialNumber, bool active, DateTimeOffset maintenanceFrequency, DateTimeOffset warrantyPeriod, DateTime installationDate)
+        public Device(int id, int locationId, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
         {
             Id = id;
             LocationId = locationId;
@@ -66,7 +66,7 @@ namespace ISSV.Core.Models
         }
         private bool active;
 
-        public DateTimeOffset MaintenanceFrequency
+        public int MaintenanceFrequency
         {
             get { return maintenanceFrequency; }
             set
@@ -78,9 +78,9 @@ namespace ISSV.Core.Models
                 }
             }
         }
-        private DateTimeOffset maintenanceFrequency;
+        private int maintenanceFrequency;
 
-        public DateTimeOffset WarrantyPeriod
+        public int WarrantyPeriod
         {
             get { return warrantyPeriod; }
             set
@@ -92,9 +92,9 @@ namespace ISSV.Core.Models
                 }
             }
         }
-        private DateTimeOffset warrantyPeriod;
+        private int warrantyPeriod;
 
-        public DateTime InstallationDate
+        public DateTimeOffset InstallationDate
         {
             get { return installationDate; }
             set
@@ -106,7 +106,7 @@ namespace ISSV.Core.Models
                 }
             }
         }
-        private DateTime installationDate;
+        private DateTimeOffset installationDate;
 
         public ObservableCollection<Maintenance> Maintenances { get; private set; }
 

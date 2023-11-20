@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ISSV.Core.Services
 {
@@ -30,7 +31,6 @@ namespace ISSV.Core.Services
                 return @"Data Source=.\SQLEXPRESS;Database=northwind;Integrated Security=true;Trusted_Connection=true";
             }
         }
-
 
         public static async Task<IEnumerable<Customer>> GetAllDataAsync()
         {
@@ -113,9 +113,9 @@ namespace ISSV.Core.Services
                                         var deviceType = reader.GetString(13);
                                         var serialNumber = reader.GetString(14);
                                         var active = reader.GetBoolean(15);
-                                        var maintenanceFrequency = reader.GetDateTimeOffset(16);
-                                        var warrantyPeriod = reader.GetDateTimeOffset(17);
-                                        var installationDate = reader.GetDateTime(18);
+                                        var maintenanceFrequency = reader.GetInt32(16);
+                                        var warrantyPeriod = reader.GetInt32(17);
+                                        var installationDate = reader.GetDateTimeOffset(18);
                                         location.Devices.Add(new Device(deviceId, location.Id, deviceType, serialNumber, active, maintenanceFrequency, warrantyPeriod, installationDate));
                                     }
 
@@ -123,7 +123,7 @@ namespace ISSV.Core.Services
                                     var maintenance = device.Maintenances.FirstOrDefault(m => m.Id == maintenanceId);
                                     if (maintenance == null)
                                     {
-                                        var date = reader.GetDateTime(20);
+                                        var date = reader.GetDateTimeOffset(20);
                                         var reason = reader.GetString(21);
                                         var workDone = reader.GetString(22);
                                         var notes = !reader.IsDBNull(23) ? reader.GetString(23) : string.Empty;
@@ -145,23 +145,15 @@ namespace ISSV.Core.Services
             return customers;
         }
 
-        public static async Task<IEnumerable<string>> GetAllAddressesAsync()
+        public static async Task<IEnumerable<MapAddress>> GetAllAddressesAsync()
         {
-            //const string getDataQuery = @"SELECT
-            //                            dbo.Customer.Address
-            //                            FROM dbo.Customer
-            //                            UNION
-            //                            SELECT
-            //                            dbo.Location.Address,
-            //                            FROM dbo.Location;";
-
             const string getDataQuery = @"SELECT
-                                        dbo.Customers.Address,
-                                        dbo.Customers.City,
-                                        dbo.Customers.Country
-                                        FROM dbo.Customers;";
+                                        Address,
+                                        Latitude,
+                                        Longitude,
+                                        FROM dbo.MapAddress;";
 
-            var addresses = new List<string>();
+            var addresses = new List<MapAddress>();
             try
             {
                 using (var conn = new SqlConnection(GetConnectionString()))
@@ -176,12 +168,11 @@ namespace ISSV.Core.Services
                             {
                                 while (await reader.ReadAsync())
                                 {
-                                    //var address = reader.GetString(0);
-                                    //addresses.Add(address);
+
                                     var address = reader.GetString(0);
-                                    var city = reader.GetString(1);
-                                    var country = reader.GetString(2);
-                                    addresses.Add($"{address}, {city}, {country}");
+                                    var latitude = reader.GetDouble(1);
+                                    var longitude = reader.GetDouble(2);
+                                    addresses.Add(new MapAddress(address, latitude, longitude));
                                 }
                             }
                         }
@@ -195,7 +186,7 @@ namespace ISSV.Core.Services
             return addresses;
         }
 
-        public static async Task UpdateCustomer(Customer customer)
+        public static async Task<bool> UpdateCustomer(Customer customer, string name, string phoneNumber, string email, string address, bool active)
         {
             const string updateCustomerQuery = @"UPDATE dbo.Customer SET
                                                  Name=@Name,
@@ -205,7 +196,7 @@ namespace ISSV.Core.Services
                                                  Active=@Active
                                                  WHERE
                                                  Id=@Id;";
-
+            bool success = false;
             try
             {
                 using (var conn = new SqlConnection(GetConnectionString()))
@@ -217,13 +208,14 @@ namespace ISSV.Core.Services
                         {
                             cmd.CommandText = updateCustomerQuery;
                             cmd.Parameters.AddWithValue("@Id", customer.Id);
-                            cmd.Parameters.AddWithValue("@Name", customer.Name);
-                            cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
-                            cmd.Parameters.AddWithValue("@Email", customer.Email);
-                            cmd.Parameters.AddWithValue("@Address", customer.Address);
-                            cmd.Parameters.AddWithValue("@Active", customer.Active);
+                            cmd.Parameters.AddWithValue("@Name", name);
+                            cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                            cmd.Parameters.AddWithValue("@Email", email);
+                            cmd.Parameters.AddWithValue("@Address", address);
+                            cmd.Parameters.AddWithValue("@Active", active);
 
                             await cmd.ExecuteNonQueryAsync();
+                            success = true;
                         }
                     }
                 }
@@ -232,9 +224,10 @@ namespace ISSV.Core.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message} {ex.InnerException?.Message}");
             }
+            return success;
         }
 
-        public static async Task UpdateLocation(Location location)
+        public static async Task<bool> UpdateLocation(Location location, string name, string address, string phoneNumber, string email, bool active)
         {
             const string updateLocationQuery = @"UPDATE dbo.Location SET
                                                  Name=@Name,
@@ -244,7 +237,7 @@ namespace ISSV.Core.Services
                                                  Active=@Active
                                                  WHERE
                                                  Id=@Id;";
-
+            bool success = false;
             try
             {
                 using (var conn = new SqlConnection(GetConnectionString()))
@@ -256,13 +249,15 @@ namespace ISSV.Core.Services
                         {
                             cmd.CommandText = updateLocationQuery;
                             cmd.Parameters.AddWithValue("@Id", location.Id);
-                            cmd.Parameters.AddWithValue("@Name", location.Name);
-                            cmd.Parameters.AddWithValue("@Address", location.Address);
-                            cmd.Parameters.AddWithValue("@PhoneNumber", location.PhoneNumber);
-                            cmd.Parameters.AddWithValue("@Email", location.Email);
-                            cmd.Parameters.AddWithValue("@Active", location.Active);
+                            cmd.Parameters.AddWithValue("@Name", name);
+                            cmd.Parameters.AddWithValue("@Address", address);
+                            cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                            cmd.Parameters.AddWithValue("@Email", email);
+                            cmd.Parameters.AddWithValue("@Active", active);
 
                             await cmd.ExecuteNonQueryAsync();
+
+                            success = true;
                         }
                     }
                 }
@@ -271,9 +266,10 @@ namespace ISSV.Core.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message} {ex.InnerException?.Message}");
             }
+            return success;
         }
 
-        public static async Task UpdateDevice(Device device)
+        public static async Task<bool> UpdateDevice(Device device, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
         {
             const string updateDeviceQuery = @"UPDATE dbo.Device SET
                                                DeviceType=@DeviceType,
@@ -284,7 +280,7 @@ namespace ISSV.Core.Services
                                                InstallationDate=@InstallationDate
                                                WHERE
                                                Id=@Id;";
-
+            bool success = false;
             try
             {
                 using (var conn = new SqlConnection(GetConnectionString()))
@@ -296,14 +292,16 @@ namespace ISSV.Core.Services
                         {
                             cmd.CommandText = updateDeviceQuery;
                             cmd.Parameters.AddWithValue("@Id", device.Id);
-                            cmd.Parameters.AddWithValue("@DeviceType", device.DeviceType);
-                            cmd.Parameters.AddWithValue("@SerialNumber", device.SerialNumber);
-                            cmd.Parameters.AddWithValue("@Active", device.Active);
-                            cmd.Parameters.AddWithValue("@MaintenanceFrequency", device.MaintenanceFrequency);
-                            cmd.Parameters.AddWithValue("@WarrantyPeriod", device.WarrantyPeriod);
-                            cmd.Parameters.AddWithValue("@InstallationDate", device.InstallationDate);
+                            cmd.Parameters.AddWithValue("@DeviceType", deviceType);
+                            cmd.Parameters.AddWithValue("@SerialNumber", serialNumber);
+                            cmd.Parameters.AddWithValue("@Active", active);
+                            cmd.Parameters.AddWithValue("@MaintenanceFrequency", maintenanceFrequency);
+                            cmd.Parameters.AddWithValue("@WarrantyPeriod", warrantyPeriod);
+                            cmd.Parameters.AddWithValue("@InstallationDate", installationDate);
 
                             await cmd.ExecuteNonQueryAsync();
+
+                            success = true;
                         }
                     }
                 }
@@ -312,9 +310,10 @@ namespace ISSV.Core.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message} {ex.InnerException?.Message}");
             }
+            return success;
         }
 
-        public static async Task UpdateMaintenance(Maintenance maintenance)
+        public static async Task<bool> UpdateMaintenance(Maintenance maintenance, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
         {
             const string updateMaintenanceQuery = @"UPDATE dbo.Maintenance SET
                                                     Date=@Date,
@@ -326,7 +325,7 @@ namespace ISSV.Core.Services
                                                     RegularMaintenance=@RegularMaintenance
                                                     WHERE
                                                     Id=@Id;";
-
+            bool success = false;
             try
             {
                 using (var conn = new SqlConnection(GetConnectionString()))
@@ -338,15 +337,17 @@ namespace ISSV.Core.Services
                         {
                             cmd.CommandText = updateMaintenanceQuery;
                             cmd.Parameters.AddWithValue("@Id", maintenance.Id);
-                            cmd.Parameters.AddWithValue("@Date", maintenance.Date);
-                            cmd.Parameters.AddWithValue("@Reason", maintenance.Reason);
-                            cmd.Parameters.AddWithValue("@WorkDone", maintenance.WorkDone);
-                            cmd.Parameters.AddWithValue("@WorkOrder", maintenance.WorkOrder);
-                            cmd.Parameters.AddWithValue("@Note", maintenance.Notes);
-                            cmd.Parameters.AddWithValue("@Repairman", maintenance.Repairman);
-                            cmd.Parameters.AddWithValue("@RegularMaintenance", maintenance.RegularMaintenance);
+                            cmd.Parameters.AddWithValue("@Date", date);
+                            cmd.Parameters.AddWithValue("@Reason", reason);
+                            cmd.Parameters.AddWithValue("@WorkDone", workDone);
+                            cmd.Parameters.AddWithValue("@WorkOrder", workOrder);
+                            cmd.Parameters.AddWithValue("@Note", notes);
+                            cmd.Parameters.AddWithValue("@Repairman", repairman);
+                            cmd.Parameters.AddWithValue("@RegularMaintenance", regularMaintenance);
 
                             await cmd.ExecuteNonQueryAsync();
+
+                            success = true;
                         }
                     }
                 }
@@ -355,6 +356,7 @@ namespace ISSV.Core.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message} {ex.InnerException?.Message}");
             }
+            return success;
         }
 
         public static async Task<Customer> InsertCustomer(string name, string phoneNumber, string email, string address, bool active)
@@ -448,7 +450,7 @@ namespace ISSV.Core.Services
             return null;
         }
 
-        public static async Task<Device> InsertDevice(int locationId, string deviceType, string serialNumber, bool active, DateTimeOffset maintenanceFrequency, DateTimeOffset warrantyPeriod, DateTime installationDate)
+        public static async Task<Device> InsertDevice(int locationId, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
         {
             const string insertDeviceQuery = @"INSERT INTO dbo.Device (
                                                LocationId,
@@ -498,7 +500,7 @@ namespace ISSV.Core.Services
             return null;
         }
 
-        public static async Task<Maintenance> InsertMaintenance(int deviceId, DateTime date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
+        public static async Task<Maintenance> InsertMaintenance(int deviceId, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
         {
             const string insertMaintenanceQuery = @"INSERT ITEM dbo.Maintenance (
                                                     DeviceId,
@@ -540,6 +542,44 @@ namespace ISSV.Core.Services
 
                             int id = (int)await cmd.ExecuteScalarAsync();
                             return new Maintenance(id, deviceId, date, reason, workDone, notes, workOrder, repairman, regularMaintenance);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message} {ex.InnerException?.Message}");
+            }
+            return null;
+        }
+
+        public static async Task<MapAddress> InsertMapAddress(string address, double latitude, double longitude)
+        {
+            const string insertCustomerQuery = @"INSERT INTO dbo.MapAddress (
+                                                 Address,
+                                                 Latitude,
+                                                 Longitude
+                                                 ) VALUES (                                                 
+                                                 @Address,
+                                                 @Latitude,
+                                                 @Longitude);";
+
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString()))
+                {
+                    await conn.OpenAsync();
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        using (var cmd = conn.CreateCommand())
+                        {
+                            cmd.CommandText = insertCustomerQuery;
+                            cmd.Parameters.AddWithValue("@Address", address);
+                            cmd.Parameters.AddWithValue("@Latitude", latitude);
+                            cmd.Parameters.AddWithValue("@Longitude", longitude);
+
+                            await cmd.ExecuteNonQueryAsync();
+                            return new MapAddress(address, latitude, longitude);
                         }
                     }
                 }
