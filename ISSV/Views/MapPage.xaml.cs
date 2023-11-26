@@ -49,7 +49,7 @@ namespace ISSV.Views
             set { Set(ref _center, value); }
         }
 
-        public ObservableCollection<SampleCompany> Source { get; } = new ObservableCollection<SampleCompany>();
+        public ObservableCollection<Customer> Source { get; } = new ObservableCollection<Customer>();
 
         public MapColorScheme MapColorScheme
         {
@@ -75,13 +75,11 @@ namespace ISSV.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await InitializeAsync();
-            var data = await SqlServerDataService.AllCompanies();
-            foreach (var company in data)
+            var customers = DataService.Customers;
+            foreach (var customer in customers)
             {
-                Source.Add(company);
+                Source.Add(customer);
             }
-
-            await AddLocations();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -118,37 +116,6 @@ namespace ISSV.Views
                 // mapControl.MapServiceToken = string.Empty;
                 AddMapIcon(Center, "Map_YourLocation".GetLocalized());
             }
-        }
-
-        private async Task AddLocations()
-        {
-            var tasks = await Task.WhenAll(Source.Select(c => GetLocation(c)));
-            var locations = tasks.Where(e => e != null).ToList();
-            var layer = new MapElementsLayer
-            {
-                ZIndex = 1,
-                MapElements = locations
-            };
-
-            mapControl.Layers.Add(layer);
-        }
-
-        private async Task<MapElement> GetLocation(SampleCompany company)
-        {
-            var address = $"{company.Address}, {company.City}, {company.Country}";
-
-            var location = await MapLocationService.GetMapLocationAsync(address);
-            if (location != null)
-            {
-                return new MapIcon
-                {
-                    Location = location.Point,
-                    NormalizedAnchorPoint = new Point(0.5, 1),
-                    ZIndex = 0,
-                    Title = location.DisplayName
-                };
-            }
-            return null;
         }
 
         public void Cleanup()

@@ -1,6 +1,8 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
 using ISSV.Dialogs;
+using ISSV.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,19 +15,19 @@ namespace ISSV.Views
 {
     public sealed partial class CustomerPage : Page, INotifyPropertyChanged
     {
-        public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
+        public ObservableCollection<Customer> Source { get; } = new ObservableCollection<Customer>();
 
         public CustomerPage()
         {
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var data = await DataService.GetContentListDataAsync();
-            foreach (var item in data)
+            var customers = DataService.Customers.Include(c => c.Locations);
+            foreach (var customer in customers)
             {
-                Source.Add(item);
+                Source.Add(customer);
             }
         }
 
@@ -62,6 +64,14 @@ namespace ISSV.Views
         private async void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
+        }
+
+        private void CustomerGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is Customer customer)
+            {
+                NavigationService.Navigate<LocationPage>(customer);
+            }
         }
     }
 }

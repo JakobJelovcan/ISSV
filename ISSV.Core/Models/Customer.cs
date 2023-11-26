@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace ISSV.Core.Models
 {
     public class Customer : INotifyPropertyChanged
     {
-        public Customer(int id, string name, string phoneNumber, string email, string address, bool active)
+        public Customer()
         {
-            Id = id;
+            Locations = new List<Location>();
+        }
+
+        public Customer(string name, string phoneNumber, string email, bool active)
+        {
             Name = name;
             PhoneNumber = phoneNumber;
             Email = email;
-            Address = address;
             Active = active;
+            Locations = new List<Location>();
         }
 
         public int Id { get; private set; }
@@ -62,20 +63,6 @@ namespace ISSV.Core.Models
         }
         private string email;
 
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                if (address != value)
-                {
-                    address = value;
-                    RaisePropertyChanged(nameof(Address));
-                }
-            }
-        }
-        private string address;
-
         public bool Active
         {
             get { return active; }
@@ -90,7 +77,7 @@ namespace ISSV.Core.Models
         }
         private bool active;
 
-        public ObservableCollection<Location> Locations { get; private set; }
+        public List<Location> Locations { get; private set; }
 
         private void RaisePropertyChanged(string propertyName)
         {

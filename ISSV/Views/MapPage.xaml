@@ -34,9 +34,10 @@
                     Margin="0,48,0,0"
                     SelectionMode="Multiple">
                     <winui:TreeView.ItemTemplate>
-                        <DataTemplate x:DataType="models:SampleCompany">
+                        <DataTemplate x:DataType="models:Customer">
                             <winui:TreeViewItem
-                        Content="{x:Bind CompanyName}" />
+                                Content="{x:Bind Name}" ItemsSource="{x:Bind Locations}" />
+
                         </DataTemplate> 
                     </winui:TreeView.ItemTemplate>
                 </winui:TreeView>

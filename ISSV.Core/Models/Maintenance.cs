@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace ISSV.Core.Models
 {
     public class Maintenance : INotifyPropertyChanged
     {
-        public Maintenance(int id, int deviceId, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
+        public Maintenance() { }
+
+        public Maintenance(Device device, DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
         {
-            Id = id;
-            DeviceId = deviceId;
+            Device = device;
             Date = date;
             Reason = reason;
             WorkDone = workDone;
@@ -22,7 +21,7 @@ namespace ISSV.Core.Models
 
         public int Id { get; private set; }
 
-        public int DeviceId { get; private set; }
+        public Device Device { get; private set; }
 
         public DateTimeOffset Date
         {

@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace ISSV.Core.Models
 {
     public class Location : INotifyPropertyChanged
     {
-        public Location(int id, int customerId, string name, string address, string phoneNumber, string email, bool active)
+        public Location()
         {
-            Id = id;
-            CustomerId = customerId;
+            Devices = new List<Device>();
+        }
+
+        public Location(Customer customer, string name, Address address, string phoneNumber, string email, bool active)
+        {
+            Customer = customer;
             Name = name;
             Address = address;
             PhoneNumber = phoneNumber;
             Email = email;
             Active = active;
+            Devices = new List<Device>();
         }
 
         public int Id { get; private set; }
 
-        public int CustomerId { get; private set; }
+        public Customer Customer { get; private set; }
 
         public string Name
         {
@@ -37,9 +39,9 @@ namespace ISSV.Core.Models
         }
         private string name;
 
-        public string Address
+        public Address Address
         {
-            get { return address; }
+            get => address;
             set
             {
                 if (address != value)
@@ -49,7 +51,7 @@ namespace ISSV.Core.Models
                 }
             }
         }
-        private string address;
+        private Address address;
 
         public string PhoneNumber
         {
@@ -93,7 +95,7 @@ namespace ISSV.Core.Models
         }
         private bool active;
 
-        public ObservableCollection<Device> Devices { get; private set; }
+        public List<Device> Devices { get; private set; }
 
         private void RaisePropertyChanged(string propertyName)
         {

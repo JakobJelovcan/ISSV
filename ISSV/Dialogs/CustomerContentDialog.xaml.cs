@@ -15,23 +15,8 @@ namespace ISSV.Dialogs
             this.Customer = customer;
         }
 
-        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            if (Customer != null)
-            {
-                if (await DataService.UpdateCustomer(Customer, CustomerName, PhoneNumber, Email, Address, Active))
-                {
-                    Customer.Name = CustomerName;
-                    Customer.PhoneNumber = PhoneNumber;
-                    Customer.Email = Email;
-                    Customer.Address = Address;
-                    Customer.Active = Active;
-                }
-            }
-            else
-            {
-                Customer = await DataService.InsertCustomer(CustomerName, PhoneNumber, Email, Address, Active);
-            }
         }
 
         private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

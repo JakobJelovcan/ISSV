@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="ISSV.Views.CustomerPage"
+    x:Class="ISSV.Views.LocationPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:ISSV.Core.Models"
     xmlns:controls="using:ISSV.Controls"
+    xmlns:models="using:ISSV.Core.Models"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
@@ -14,28 +14,28 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <CommandBar
-            x:Name="CustomerCommandBar"
-            Margin="56,0,56,0"
-            IsOpen="False"
-            DefaultLabelPosition="Right"
-            Background="Transparent">
+         x:Name="CustomerCommandBar"
+         Margin="56,0,56,0"
+         IsOpen="False"
+         DefaultLabelPosition="Right"
+         Background="Transparent">
             <AppBarButton
-                Icon="Add"
-                Label="Add"
-                IsCompact="True"
-                Click="AddCustomerButton_Click"/>
+             Icon="Add"
+             Label="Add"
+             IsCompact="True"
+             Click="AppBarButton_Click"/>
         </CommandBar>
 
         <GridView
-            x:Name="CustomerGridView"
-            Grid.Row="1"
-            Padding="56,0,56,0"
-            IsItemClickEnabled="True"
-            ItemClick="CustomerGridView_ItemClick"
-            ItemsSource="{x:Bind Source, Mode=OneWay}">
+         x:Name="LocationGridView"
+         Grid.Row="1"
+         Padding="56,0,56,0"
+         IsItemClickEnabled="True"
+         ItemClick="LocationGridView_ItemClick"
+         ItemsSource="{x:Bind Source, Mode=OneWay}">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:Customer">
-                    <controls:CustomerControl />
+                <DataTemplate x:DataType="models:Location">
+                    <controls:LocationControl />
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

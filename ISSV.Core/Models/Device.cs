@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 
 namespace ISSV.Core.Models
 {
     public class Device : INotifyPropertyChanged
     {
-        public Device(int id, int locationId, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
+        public Device()
         {
-            Id = id;
-            LocationId = locationId;
+            Maintenances = new List<Maintenance>();
+        }
+
+        public Device(Location location, string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
+        {
+            Location = location;
             DeviceType = deviceType;
             SerialNumber = serialNumber;
             Active = active;
             MaintenanceFrequency = maintenanceFrequency;
             WarrantyPeriod = warrantyPeriod;
             InstallationDate = installationDate;
+            Maintenances = new List<Maintenance>();
         }
 
         public int Id { get; private set; }
 
-        public int LocationId { get; private set; }
+        public Location Location { get; private set; }
 
         public string DeviceType
         {
@@ -108,7 +112,7 @@ namespace ISSV.Core.Models
         }
         private DateTimeOffset installationDate;
 
-        public ObservableCollection<Maintenance> Maintenances { get; private set; }
+        public List<Maintenance> Maintenances { get; private set; }
 
         private void RaisePropertyChanged(string propertyName)
         {
