@@ -61,7 +61,7 @@ namespace ISSV.Views
             }
         }
 
-        private async void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
         }

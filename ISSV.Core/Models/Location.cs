@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ISSV.Core.Models
 {
@@ -21,6 +23,8 @@ namespace ISSV.Core.Models
             Devices = new List<Device>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private set; }
 
         public Customer Customer { get; private set; }
@@ -94,6 +98,21 @@ namespace ISSV.Core.Models
             }
         }
         private bool active;
+
+        [NotMapped]
+        public bool DisplayOnMap
+        {
+            get { return displayOnMap; }
+            set
+            {
+                if (displayOnMap != value)
+                {
+                    displayOnMap = value;
+                    RaisePropertyChanged(nameof(DisplayOnMap));
+                }
+            }
+        }
+        private bool displayOnMap;
 
         public List<Device> Devices { get; private set; }
 

@@ -1,11 +1,6 @@
 ﻿using ISSV.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ISSV.Core.Services
 {
@@ -49,18 +44,6 @@ namespace ISSV.Core.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //Keys
-            modelBuilder.Entity<Customer>().HasKey(c => c.Id);
-            modelBuilder.Entity<Location>().HasKey(l => l.Id);
-            modelBuilder.Entity<Device>().HasKey(d => d.Id);
-            modelBuilder.Entity<Maintenance>().HasKey(m => m.Id);
-            modelBuilder.Entity<Address>().HasKey(a => a.Name);
-
-            //Relations
-            //modelBuilder.Entity<Customer>().HasMany<Location>().WithOne(l => l.Customer);
-            //modelBuilder.Entity<Location>().HasMany<Device>().WithOne(d => d.Location);
-            //modelBuilder.Entity<Device>().HasMany<Maintenance>().WithOne(m => m.Device);
         }
     }
 }

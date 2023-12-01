@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -116,6 +118,28 @@ namespace ISSV.Views
                 // mapControl.MapServiceToken = string.Empty;
                 AddMapIcon(Center, "Map_YourLocation".GetLocalized());
             }
+
+            var locations = new List<MapElement>();
+            foreach (var address in DataService.Addresses)
+            {
+                BasicGeoposition geo = new BasicGeoposition { Latitude = address.Latitude, Longitude = address.Longitude };
+                var geopoint = new Geopoint(geo);
+                var icon = new MapIcon
+                {
+                    Location = geopoint,
+                    Title = address.Name,
+                    ZIndex = 0
+                };
+                locations.Add(icon);
+            }
+
+            var layer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = locations
+            };
+
+            mapControl.Layers.Add(layer);
         }
 
         public void Cleanup()

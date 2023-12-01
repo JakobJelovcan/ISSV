@@ -1,4 +1,6 @@
-﻿namespace ISSV.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ISSV.Core.Models
 {
     public class Address
     {
@@ -11,6 +13,7 @@
             Longitude = longitude;
         }
 
+        [Key]
         public string Name { get; private set; }
 
         public double Latitude { get; private set; }

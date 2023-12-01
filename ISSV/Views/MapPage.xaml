@@ -7,11 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:ISSV.Core.Models"
+    xmlns:helpers="using:ISSV.Helpers"
     Style="{StaticResource PageStyle}"
     xmlns:behaviors="using:ISSV.Behaviors"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <DataTemplate x:Key="CustomerDataTemplate" x:DataType="models:Customer">
+            <winui:TreeViewItem
+                IsSelected="{x:Bind DisplayOnMap, Mode=TwoWay}"
+                Content="{x:Bind Name, Mode=OneWay}"
+                ItemsSource="{x:Bind Locations, Mode=OneWay}" />
+        </DataTemplate>
+        <DataTemplate x:Key="LocationDataTemplate" x:DataType="models:Location">
+            <winui:TreeViewItem
+                IsSelected="{x:Bind DisplayOnMap, Mode=TwoWay}"
+                Content="{x:Bind Address.Name, Mode=OneWay}" />
+        </DataTemplate>
+        <helpers:MapFilterDataTemplateSelector x:Key="MapFilterDataTemplateSelector"
+            Customer="{StaticResource CustomerDataTemplate}"
+            Location="{StaticResource LocationDataTemplate}" />
+    </Page.Resources>
     <Grid>
         <CommandBar
             IsOpen="False"
@@ -30,16 +46,11 @@
             PanePlacement="Right">
             <SplitView.Pane>
                 <winui:TreeView
+                    x:Name="treeView"
                     ItemsSource="{x:Bind Source}"
                     Margin="0,48,0,0"
-                    SelectionMode="Multiple">
-                    <winui:TreeView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Customer">
-                            <winui:TreeViewItem
-                                Content="{x:Bind Name}" ItemsSource="{x:Bind Locations}" />
-
-                        </DataTemplate> 
-                    </winui:TreeView.ItemTemplate>
+                    SelectionMode="Multiple"
+                    ItemTemplateSelector="{StaticResource MapFilterDataTemplateSelector}">
                 </winui:TreeView>
             </SplitView.Pane>
             <maps:MapControl
