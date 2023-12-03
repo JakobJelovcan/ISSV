@@ -125,6 +125,20 @@ namespace ISSV.Core.Models
         }
         private bool regularMaintenance;
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Maintenance maintenance)
+            {
+                return maintenance.Id == this.Id;
+            }
+            else
+            {
+                return base.Equals(obj);
+            }
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
+
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -1,11 +1,10 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
-using ISSV.Dialogs;
 using ISSV.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using Windows.UI.Xaml.Controls;
@@ -15,7 +14,14 @@ namespace ISSV.Views
 {
     public sealed partial class CustomerPage : Page, INotifyPropertyChanged
     {
-        public ObservableCollection<Customer> Source { get; } = new ObservableCollection<Customer>();
+        public ObservableCollection<Location> Source { get; } = new ObservableCollection<Location>();
+
+        public Customer Customer
+        {
+            get => customer;
+            set => Set(ref customer, value);
+        }
+        private Customer customer;
 
         public CustomerPage()
         {
@@ -24,16 +30,21 @@ namespace ISSV.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var customers = DataService.Customers.Include(c => c.Locations);
-            foreach (var customer in customers)
+            base.OnNavigatedTo(e);
+            if (e.Parameter is Customer customer)
             {
-                Source.Add(customer);
+                Customer = DataService.Customers.Where(c => c.Equals(customer)).FirstOrDefault();
+                var locations = DataService.Locations.Include(l => l.Address).Include(l => l.Devices).ThenInclude(d => d.Maintenances).Where(l => l.Customer.Equals(customer));
+                foreach (var location in locations)
+                {
+                    Source.Add(location);
+                }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {
@@ -46,31 +57,16 @@ namespace ISSV.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private async void AddCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            CustomerContentDialog customerDialog = new CustomerContentDialog(null);
-            await customerDialog.ShowAsync();
+
         }
 
-        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void LocationGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (sender is MenuFlyoutItem flyoutItem && flyoutItem.DataContext is Customer customer)
+            if (e.ClickedItem is Location location)
             {
-                CustomerContentDialog customerDialog = new CustomerContentDialog(customer);
-                await customerDialog.ShowAsync();
-            }
-        }
-
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
-
-        private void CustomerGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (e.ClickedItem is Customer customer)
-            {
-                NavigationService.Navigate<LocationPage>(customer);
+                NavigationService.Navigate<LocationPage>(location);
             }
         }
     }

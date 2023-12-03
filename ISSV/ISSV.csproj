@@ -169,11 +169,17 @@
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ThemeSelectorService.cs" />
-    <Compile Include="Views\CustomerPage.xaml.cs">
-      <DependentUpon>CustomerPage.xaml</DependentUpon>
+    <Compile Include="Views\CustomersPage.xaml.cs">
+      <DependentUpon>CustomersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LocationPage.xaml.cs">
       <DependentUpon>LocationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerPage.xaml.cs">
+      <DependentUpon>CustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MapPage.xaml.cs">
       <DependentUpon>MapPage.xaml</DependentUpon>
@@ -244,11 +250,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CustomerPage.xaml">
+    <Page Include="Views\CustomersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LocationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DevicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

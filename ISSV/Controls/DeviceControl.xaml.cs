@@ -12,6 +12,7 @@ namespace ISSV.Controls
         {
             this.InitializeComponent();
         }
+
         public Device Device
         {
             get { return (Device)GetValue(DeviceProperty); }
@@ -19,5 +20,10 @@ namespace ISSV.Controls
         }
         public static readonly DependencyProperty DeviceProperty =
             DependencyProperty.Register("Device", typeof(Device), typeof(DeviceControl), new PropertyMetadata(null));
+
+        private void DeviceControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            if (DataContext is Device device) { Device = device; }
+        }
     }
 }

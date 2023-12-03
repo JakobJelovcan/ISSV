@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ISSV.Core.Models
 {
@@ -82,21 +83,32 @@ namespace ISSV.Core.Models
         private bool active;
 
         [NotMapped]
-        public bool DisplayOnMap
-        {
-            get { return displayOnMap; }
-            set
-            {
-                if (displayOnMap != value)
-                {
-                    displayOnMap = value;
-                    RaisePropertyChanged(nameof(DisplayOnMap));
-                }
-            }
-        }
-        private bool displayOnMap;
+        public int NumberOfLocations => Locations.Count;
+
+        [NotMapped]
+        public int NumberOfDevices => Locations.Sum(l => l.Devices.Count);
+
+        [NotMapped]
+        public int NumberOfRequiredMaintenances => Locations.Sum(l => l.NumberOfRequiredMaintenances);
+
+        [NotMapped]
+        public bool RequiresMaintenances => NumberOfRequiredMaintenances > 0;
 
         public List<Location> Locations { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Customer customer)
+            {
+                return customer.Id == this.Id;
+            }
+            else
+            {
+                return base.Equals(obj);
+            }
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
 
         private void RaisePropertyChanged(string propertyName)
         {

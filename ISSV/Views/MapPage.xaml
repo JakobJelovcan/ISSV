@@ -15,13 +15,13 @@
     <Page.Resources>
         <DataTemplate x:Key="CustomerDataTemplate" x:DataType="models:Customer">
             <winui:TreeViewItem
-                IsSelected="{x:Bind DisplayOnMap, Mode=TwoWay}"
+                Tapped="treeView_Tapped"
                 Content="{x:Bind Name, Mode=OneWay}"
                 ItemsSource="{x:Bind Locations, Mode=OneWay}" />
         </DataTemplate>
         <DataTemplate x:Key="LocationDataTemplate" x:DataType="models:Location">
             <winui:TreeViewItem
-                IsSelected="{x:Bind DisplayOnMap, Mode=TwoWay}"
+                Tapped="treeView_Tapped"
                 Content="{x:Bind Address.Name, Mode=OneWay}" />
         </DataTemplate>
         <helpers:MapFilterDataTemplateSelector x:Key="MapFilterDataTemplateSelector"
@@ -35,19 +35,23 @@
             DefaultLabelPosition="Right"
             VerticalAlignment="Top"
             Canvas.ZIndex="1">
-            <AppBarButton Icon="Filter" Label="Filter" IsCompact="True" Click="AppBarButton_Click"/>
+            <AppBarButton
+                Icon="Filter"
+                Label="Filter"
+                IsCompact="True"
+                Click="AppBarButton_Click"/>
         </CommandBar>
         <SplitView
             x:Name="MapSplitView"
             Grid.Row="1"
-            IsPaneOpen="False"
+            IsPaneOpen="True"
             DisplayMode="Overlay"
             PaneBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             PanePlacement="Right">
             <SplitView.Pane>
                 <winui:TreeView
                     x:Name="treeView"
-                    ItemsSource="{x:Bind Source}"
+                    ItemsSource="{x:Bind Source, Mode=OneWay}"
                     Margin="0,48,0,0"
                     SelectionMode="Multiple"
                     ItemTemplateSelector="{StaticResource MapFilterDataTemplateSelector}">
@@ -58,7 +62,8 @@
                 MapServiceToken="Kpch28g23Cnw6xNVbP7t~SATgK5XNhqcC5ZyUiA51BA~Akzl5DFqB3j9vskTvi1Qy8hYsX-G27CZSnfBO3LaStB-QQAqKLB6n0eYZCblPBr4"
                 ColorScheme="{x:Bind MapColorScheme, Mode=OneWay}"
                 ZoomLevel="{x:Bind ZoomLevel, Mode=OneWay}"
-                Center="{x:Bind Center, Mode=OneWay}" />
+                Center="{x:Bind Center, Mode=OneWay}"
+                MapElementClick="mapControl_MapElementClick"/>
         </SplitView>
     </Grid>
 </Page>

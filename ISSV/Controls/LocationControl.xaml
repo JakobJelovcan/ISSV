@@ -54,7 +54,8 @@
             CornerRadius="{StaticResource ControlCornerRadius}">
             <winui:InfoBadge
                 Style="{StaticResource CriticalValueInfoBadgeStyle}"
-                Value="42" />
+                Visibility="{x:Bind Location.RequiresMaintenances, Mode=OneWay}"
+                Value="{x:Bind Location.NumberOfRequiredMaintenances, Mode=OneWay}" />
         </Grid>
     </Grid>
 </UserControl>

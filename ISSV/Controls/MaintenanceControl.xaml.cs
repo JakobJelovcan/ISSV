@@ -20,5 +20,10 @@ namespace ISSV.Controls
         }
         public static readonly DependencyProperty MaintenanceProperty =
             DependencyProperty.Register("Maintenance", typeof(Maintenance), typeof(MaintenanceControl), new PropertyMetadata(null));
+
+        private void MaintenanceControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            if (DataContext is Maintenance maintenance) { Maintenance = maintenance; }
+        }
     }
 }

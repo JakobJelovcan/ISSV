@@ -1,27 +1,25 @@
 ﻿<Page
-    x:Class="ISSV.Views.CustomerPage"
+    x:Class="ISSV.Views.DevicePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:ISSV.Controls"
     xmlns:models="using:ISSV.Core.Models"
-    Style="{StaticResource PageStyle}"
+    xmlns:controls="using:ISSV.Controls"
     xmlns:behaviors="using:ISSV.Behaviors"
+    Style="{StaticResource PageStyle}"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
-
-        <GridView
-             x:Name="LocationGridView"
-             Grid.Row="1"
-             Padding="56,0,56,0"
-             IsItemClickEnabled="True"
-             ItemClick="LocationGridView_ItemClick"
-             Header="{x:Bind Customer, Mode=OneWay}"
-             ItemsSource="{x:Bind Source, Mode=OneWay}">
-            <GridView.HeaderTemplate>
-                <DataTemplate x:DataType="models:Customer">
+        <ListView
+            Grid.Row="1"
+            Padding="56,0,56,0"
+            IsItemClickEnabled="True"
+            ItemClick="GridView_ItemClick"
+            Header="{x:Bind Device, Mode=OneWay}"
+            ItemsSource="{x:Bind Source, Mode=OneWay}">
+            <ListView.HeaderTemplate>
+                <DataTemplate x:DataType="models:Device">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -31,9 +29,8 @@
                         <TextBlock
                             Margin="{StaticResource SmallTopBottomMargin}"
                             Style="{ThemeResource TitleTextBlockStyle}"
-                            Text="{x:Bind Name, Mode=OneWay}" />
-                        <Grid
-                            Grid.Row="1">
+                            Text="{x:Bind DeviceType, Mode=OneWay}" />
+                        <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
@@ -42,51 +39,51 @@
                                 <ColumnDefinition Width="300" />
                                 <ColumnDefinition Width="400" />
                             </Grid.ColumnDefinitions>
-
                             <StackPanel
                                 Grid.Row="0"
                                 Grid.Column="0">
                                 <TextBlock
                                     Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Phone number"/>
+                                    Text="Serial number"/>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
-                                    Text="{x:Bind PhoneNumber, Mode=OneWay}" />
+                                    Text="{x:Bind SerialNumber, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                             </StackPanel>
-
                             <StackPanel
                                 Grid.Row="0"
                                 Grid.Column="1">
                                 <TextBlock
                                     Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Email"/>
+                                    Text="Installation date"/>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
-                                    Text="{x:Bind Email, Mode=OneWay}" />
+                                    Text="{x:Bind InstallationDate, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                             </StackPanel>
-
                             <StackPanel
                                 Grid.Row="1"
                                 Grid.Column="0">
                                 <TextBlock
                                     Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Number of locations"/>
+                                    Text="Warranty period"/>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
-                                    Text="{x:Bind NumberOfLocations, Mode=OneWay}" />
+                                    Text="{x:Bind WarrantyPeriod, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                             </StackPanel>
-
                             <StackPanel
                                 Grid.Row="1"
                                 Grid.Column="1">
                                 <TextBlock
                                     Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Number of devices"/>
+                                    Text="Maintenance frequency"/>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
-                                    Text="{x:Bind NumberOfDevices, Mode=OneWay}" />
+                                    Text="{x:Bind MaintenanceFrequency, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                             </StackPanel>
-                        </Grid>                        
+                        </Grid>
                         <CommandBar
                             Grid.Row="2"
                             IsOpen="False"
@@ -104,16 +101,17 @@
                                 Icon="Add"
                                 Label="Add"
                                 IsCompact="True"
-                                Click="AppBarButton_Click"/>
+                                Click="AddMaintenanceButton_Click"/>
                         </CommandBar>
                     </Grid>
                 </DataTemplate>
-            </GridView.HeaderTemplate>
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:Location">
-                    <controls:LocationControl />
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Maintenance">
+                    <controls:MaintenanceControl
+                        Margin="-12,2,-10,2" />
                 </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

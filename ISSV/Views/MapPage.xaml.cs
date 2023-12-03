@@ -1,20 +1,15 @@
-﻿using System;
+﻿using ISSV.Core.Models;
+using ISSV.Core.Services;
+using ISSV.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using ISSV.Core.Models;
-using ISSV.Core.Services;
-using ISSV.Helpers;
-using ISSV.Services;
-
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
-using Windows.Services.Maps;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Navigation;
@@ -23,6 +18,8 @@ namespace ISSV.Views
 {
     public sealed partial class MapPage : Page, INotifyPropertyChanged
     {
+        private static readonly HashSet<int> SelectedLocations = new HashSet<int>();
+
         // TODO: Set your preferred default zoom level
         private const double DefaultZoomLevel = 17;
 
@@ -44,6 +41,8 @@ namespace ISSV.Views
         }
 
         private Geopoint _center;
+
+        private MapElementsLayer _layer;
 
         public Geopoint Center
         {
@@ -69,6 +68,10 @@ namespace ISSV.Views
         public MapPage()
         {
             _locationService = new LocationService();
+            _layer = new MapElementsLayer
+            {
+                ZIndex = 1,
+            };
             Center = new Geopoint(_defaultPosition);
             ZoomLevel = DefaultZoomLevel;
             InitializeComponent();
@@ -77,10 +80,16 @@ namespace ISSV.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await InitializeAsync();
-            var customers = DataService.Customers;
+            var customers = DataService.Customers.Include(c => c.Locations).ThenInclude(l => l.Address);
             foreach (var customer in customers)
             {
                 Source.Add(customer);
+            }
+
+            if (mapControl != null)
+            {
+                mapControl.Layers.Add(_layer);
+                AddMapIcons();
             }
         }
 
@@ -111,35 +120,6 @@ namespace ISSV.Views
                     Center = new Geopoint(_defaultPosition);
                 }
             }
-
-            if (mapControl != null)
-            {
-                // TODO: Set your map service token. If you don't have one, request from https://www.bingmapsportal.com/
-                // mapControl.MapServiceToken = string.Empty;
-                AddMapIcon(Center, "Map_YourLocation".GetLocalized());
-            }
-
-            var locations = new List<MapElement>();
-            foreach (var address in DataService.Addresses)
-            {
-                BasicGeoposition geo = new BasicGeoposition { Latitude = address.Latitude, Longitude = address.Longitude };
-                var geopoint = new Geopoint(geo);
-                var icon = new MapIcon
-                {
-                    Location = geopoint,
-                    Title = address.Name,
-                    ZIndex = 0
-                };
-                locations.Add(icon);
-            }
-
-            var layer = new MapElementsLayer
-            {
-                ZIndex = 1,
-                MapElements = locations
-            };
-
-            mapControl.Layers.Add(layer);
         }
 
         public void Cleanup()
@@ -159,28 +139,48 @@ namespace ISSV.Views
             }
         }
 
-        private void AddMapIcon(Geopoint position, string title)
+        private void AddMapIcons()
         {
-            MapIcon mapIcon = new MapIcon()
+            var mapElements = new List<MapElement>();
+            foreach (var location in DataService.Locations.Include(l => l.Customer).Include(l => l.Address))
             {
-                Location = position,
-                NormalizedAnchorPoint = new Point(0.5, 1.0),
-                Title = title,
-                Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/map.png")),
-                ZIndex = 0
-            };
-            mapControl.MapElements.Add(mapIcon);
+                location.PropertyChanged += DisplayOnMapChanged;
+                location.Customer.PropertyChanged += DisplayOnMapChanged;
+
+                if (SelectedLocations.Contains(location.Id))
+                {
+                    var geoPosition = new BasicGeoposition { Latitude = location.Address.Latitude, Longitude = location.Address.Longitude };
+                    var geoPoint = new Geopoint(geoPosition);
+                    var mapIcon = new MapIcon()
+                    {
+                        Location = geoPoint,
+                        NormalizedAnchorPoint = new Point(0.5, 1.0),
+                        Title = location.Address.Name,
+                        ZIndex = 0,
+                        Tag = location,
+                    };
+                    mapElements.Add(mapIcon);
+                }
+            }
+            _layer.MapElements = mapElements;
+        }
+
+        private void DisplayOnMapChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "DisplayOnMap")
+            {
+                AddMapIcons();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {
                 return;
             }
-
             storage = value;
             OnPropertyChanged(propertyName);
         }
@@ -190,6 +190,22 @@ namespace ISSV.Views
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             MapSplitView.IsPaneOpen ^= true;
+        }
+
+        private void treeView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var selectedItems = treeView.SelectedItems.Where(i => i is Location).Select(i => (i as Location).Id);
+            if (!SelectedLocations.SetEquals(selectedItems))
+            {
+                SelectedLocations.Clear();
+                SelectedLocations.UnionWith(selectedItems);
+                AddMapIcons();
+            }
+        }
+
+        private void mapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        {
+
         }
     }
 }

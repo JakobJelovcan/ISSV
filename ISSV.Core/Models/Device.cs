@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ISSV.Core.Helpers;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ISSV.Core.Models
 {
@@ -116,7 +117,30 @@ namespace ISSV.Core.Models
         }
         private DateTimeOffset installationDate;
 
+        [NotMapped]
+        public int NumberOfMaintenances => Maintenances.Count;
+
+        [NotMapped]
+        public DateTimeOffset LastMaintenance => Maintenances.Where(m => m.RegularMaintenance).MaxOr(m => m.Date, InstallationDate);
+
+        [NotMapped]
+        public bool RequiresMaintenance => LastMaintenance.AddMonths(maintenanceFrequency) > DateTimeOffset.Now;
+
         public List<Maintenance> Maintenances { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Device device)
+            {
+                return device.Id == this.Id;
+            }
+            else
+            {
+                return base.Equals(obj);
+            }
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
 
         private void RaisePropertyChanged(string propertyName)
         {

@@ -4,38 +4,112 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:ISSV.Controls"
     xmlns:models="using:ISSV.Core.Models"
+    xmlns:controls="using:ISSV.Controls"
     Style="{StaticResource PageStyle}"
+    xmlns:behaviors="using:ISSV.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <CommandBar
-         x:Name="CustomerCommandBar"
-         Margin="56,0,56,0"
-         IsOpen="False"
-         DefaultLabelPosition="Right"
-         Background="Transparent">
-            <AppBarButton
-             Icon="Add"
-             Label="Add"
-             IsCompact="True"
-             Click="AppBarButton_Click"/>
-        </CommandBar>
-
         <GridView
-         x:Name="LocationGridView"
-         Grid.Row="1"
-         Padding="56,0,56,0"
-         IsItemClickEnabled="True"
-         ItemClick="LocationGridView_ItemClick"
-         ItemsSource="{x:Bind Source, Mode=OneWay}">
-            <GridView.ItemTemplate>
+            x:Name="DeviceGridView"
+            Grid.Row="1"
+            Padding="56,0,56,0"
+            IsItemClickEnabled="True"
+            ItemClick="DeviceGridView_ItemClick"
+            Header="{x:Bind Location, Mode=OneWay}"
+            ItemsSource="{x:Bind Source, Mode=OneWay}">
+            <GridView.HeaderTemplate>
                 <DataTemplate x:DataType="models:Location">
-                    <controls:LocationControl />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Margin="{StaticResource SmallTopBottomMargin}"
+                            Style="{ThemeResource TitleTextBlockStyle}"
+                            Text="{x:Bind Name, Mode=OneWay}" />
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="400" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0">
+                                <TextBlock
+                                    Style="{StaticResource DetailSubTitleStyle}"
+                                    Text="Phone number"/>
+                                <TextBlock
+                                    Style="{StaticResource DetailBodyBaseMediumStyle}"
+                                    Text="{x:Bind PhoneNumber, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="1">
+                                <TextBlock
+                                    Style="{StaticResource DetailSubTitleStyle}"
+                                    Text="Address"/>
+                                <TextBlock
+                                    Style="{StaticResource DetailBodyBaseMediumStyle}"
+                                    Text="{x:Bind Address.Name, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0">
+                                <TextBlock
+                                    Style="{StaticResource DetailSubTitleStyle}"
+                                    Text="Email"/>
+                                <TextBlock
+                                    Style="{StaticResource DetailBodyBaseMediumStyle}"
+                                    Text="{x:Bind Email, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="1">
+                                <TextBlock
+                                    Style="{StaticResource DetailSubTitleStyle}"
+                                    Text="Number of devices"/>
+                                <TextBlock
+                                    Style="{StaticResource DetailBodyBaseMediumStyle}"
+                                    Text="{x:Bind NumberOfDevices, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </Grid>
+                        <CommandBar
+                            Grid.Row="2"
+                            IsOpen="False"
+                            DefaultLabelPosition="Right"
+                            Background="Transparent">
+                            <AppBarButton
+                                Icon="Edit"
+                                Label="Edit"
+                                IsCompact="True" />
+                            <AppBarButton
+                                Icon="Delete"
+                                Label="Delete"
+                                IsCompact="True" />
+                            <AppBarButton
+                                Icon="Add"
+                                Label="Add"
+                                IsCompact="True"
+                                Click="AddDeviceButton_Click"/>    
+                        </CommandBar>
+                    </Grid>
+                </DataTemplate>
+            </GridView.HeaderTemplate>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:Customer">
+                    <controls:DeviceControl />
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

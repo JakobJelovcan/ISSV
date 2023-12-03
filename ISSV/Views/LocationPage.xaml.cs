@@ -1,7 +1,7 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -14,7 +14,14 @@ namespace ISSV.Views
 {
     public sealed partial class LocationPage : Page, INotifyPropertyChanged
     {
-        ObservableCollection<Location> Source = new ObservableCollection<Location>();
+        public ObservableCollection<Device> Source { get; } = new ObservableCollection<Device>();
+
+        public Location Location
+        {
+            get => location;
+            set => Set(ref location, value);
+        }
+        private Location location;
 
         public LocationPage()
         {
@@ -24,19 +31,20 @@ namespace ISSV.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is Customer customer)
+            if (e.Parameter is Location location)
             {
-                var locations = DataService.Locations.Include(l => l.Address).Include(l => l.Devices).Where(l => l.Customer == customer);
-                foreach (var location in locations)
+                Location = DataService.Locations.Where(l => l.Equals(location)).FirstOrDefault();
+                var devices = DataService.Devices.Include(d => d.Location).Include(d => d.Maintenances).Where(d => d.Location.Equals(location));
+                foreach (var device in devices)
                 {
-                    Source.Add(location);
+                    Source.Add(device);
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {
@@ -49,12 +57,15 @@ namespace ISSV.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void DeviceGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            if (e.ClickedItem is Device device)
+            {
+                NavigationService.Navigate<DevicePage>(device);
+            }
         }
 
-        private void LocationGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void AddDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
         }

@@ -19,5 +19,19 @@ namespace ISSV.Core.Models
         public double Latitude { get; private set; }
 
         public double Longitude { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Address address)
+            {
+                return address.Name == this.Name;
+            }
+            else
+            {
+                return base.Equals(obj);
+            }
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
