@@ -11,7 +11,22 @@ namespace ISSV.Dialogs
         public LocationContentDialog(Location location)
         {
             this.InitializeComponent();
-            this.location = location;
+            this.Location = location;
+            if (Location != null)
+            {
+                LocationName = Location.Name;
+                Address = Location.Address.Name;
+                PhoneNumber = Location.PhoneNumber;
+                Email = Location.Email;
+                Active = Location.Active;
+                ApplyToChildren = false;
+                Title = "Edit location";
+            }
+            else
+            {
+                Title = "Create location";
+                Active = true;
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -23,7 +38,7 @@ namespace ISSV.Dialogs
 
         }
 
-        private Location location { get; set; }
+        private Location Location { get; set; }
 
         public string LocationName
         {
@@ -64,5 +79,13 @@ namespace ISSV.Dialogs
         }
         public static readonly DependencyProperty ActiveProperty =
             DependencyProperty.Register("Active", typeof(bool), typeof(LocationContentDialog), new PropertyMetadata(false));
+
+        public bool ApplyToChildren
+        {
+            get { return (bool)GetValue(ApplyToChildrenProperty); }
+            set { SetValue(ApplyToChildrenProperty, value); }
+        }
+        public static readonly DependencyProperty ApplyToChildrenProperty =
+            DependencyProperty.Register("ApplyToChildren", typeof(bool), typeof(LocationContentDialog), new PropertyMetadata(false));
     }
 }

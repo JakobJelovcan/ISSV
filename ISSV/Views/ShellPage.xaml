@@ -55,7 +55,7 @@
             PaneOpening="NavigationView_PaneOpening"
             PaneClosing="NavigationView_PaneClosing">
             <winui:NavigationView.MenuItems>
-                <winui:NavigationViewItem x:Uid="Shell_Customer" Icon="Contact" helpers:NavHelper.NavigateTo="views:CustomersPage" />
+                <winui:NavigationViewItem x:Uid="Shell_Customers" Icon="Contact" helpers:NavHelper.NavigateTo="views:CustomersPage" />
                 <winui:NavigationViewItem x:Uid="Shell_Map" Icon="MapPin" helpers:NavHelper.NavigateTo="views:MapPage" />
             </winui:NavigationView.MenuItems>
             <i:Interaction.Behaviors>

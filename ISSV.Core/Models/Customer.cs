@@ -89,10 +89,10 @@ namespace ISSV.Core.Models
         public int NumberOfDevices => Locations.Sum(l => l.Devices.Count);
 
         [NotMapped]
-        public int NumberOfRequiredMaintenances => Locations.Sum(l => l.NumberOfRequiredMaintenances);
+        public int NumberOfRequiredMaintenances => Locations.Where(l => l.Active).Sum(l => l.NumberOfRequiredMaintenances);
 
         [NotMapped]
-        public bool RequiresMaintenances => NumberOfRequiredMaintenances > 0;
+        public bool RequiresMaintenances => (NumberOfRequiredMaintenances > 0) && Active;
 
         public List<Location> Locations { get; private set; }
 

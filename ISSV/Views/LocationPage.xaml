@@ -93,11 +93,13 @@
                             <AppBarButton
                                 Icon="Edit"
                                 Label="Edit"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="EditLocationButton_Click"/>
                             <AppBarButton
                                 Icon="Delete"
                                 Label="Delete"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="DeleteLocationButton_Click"/>
                             <AppBarButton
                                 Icon="Add"
                                 Label="Add"

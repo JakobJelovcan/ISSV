@@ -124,7 +124,7 @@ namespace ISSV.Core.Models
         public DateTimeOffset LastMaintenance => Maintenances.Where(m => m.RegularMaintenance).MaxOr(m => m.Date, InstallationDate);
 
         [NotMapped]
-        public bool RequiresMaintenance => LastMaintenance.AddMonths(maintenanceFrequency) > DateTimeOffset.Now;
+        public bool RequiresMaintenance => (LastMaintenance.AddMonths(maintenanceFrequency) > DateTimeOffset.Now) && Active;
 
         public List<Maintenance> Maintenances { get; private set; }
 

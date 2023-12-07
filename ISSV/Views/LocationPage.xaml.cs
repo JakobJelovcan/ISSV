@@ -1,7 +1,9 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Dialogs;
 using ISSV.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -65,9 +67,21 @@ namespace ISSV.Views
             }
         }
 
-        private void AddDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void EditLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            LocationContentDialog dialog = new LocationContentDialog(Location);
+            await dialog.ShowAsync();
+        }
 
+        private void DeleteLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //TODO: Delete dialog
+        }
+
+        private async void AddDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DeviceContentDialog dialog = new DeviceContentDialog(null);
+            await dialog.ShowAsync();
         }
     }
 }

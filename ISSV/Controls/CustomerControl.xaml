@@ -6,16 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:primitives="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="90"
     d:DesignWidth="300"
     DataContextChanged="CustomerControl_DataContextChanged">
-    <UserControl.ContextFlyout>
-        <MenuFlyout>
-            <MenuFlyoutItem Icon="Edit" Text="Edit" />
-            <MenuFlyoutItem Icon="Delete" Text="Delete" />
-        </MenuFlyout>
-    </UserControl.ContextFlyout>
     <Grid
         x:Name="controlRoot"
         Width="300"
@@ -52,10 +47,37 @@
             Grid.Column="1"
             VerticalAlignment="Top"
             CornerRadius="{StaticResource ControlCornerRadius}">
-            <winui:InfoBadge
-                Style="{StaticResource CriticalValueInfoBadgeStyle}"
-                Visibility="{x:Bind Customer.RequiresMaintenances, Mode=OneWay}"
-                Value="{x:Bind Customer.NumberOfRequiredMaintenances, Mode=OneWay}" />
+            <primitives:SwitchPresenter
+                TargetType="x:Boolean"
+                Value="{x:Bind Customer.Active, Mode=OneWay}">
+                <primitives:Case
+                    Value="true">
+                    <primitives:SwitchPresenter
+                        TargetType="x:Boolean"
+                        Value="{x:Bind Customer.RequiresMaintenances, Mode=OneWay}">
+                        <primitives:Case
+                            Value="true">
+                            <winui:InfoBadge
+                                Style="{StaticResource CriticalValueInfoBadgeStyle}"
+                                Value="{x:Bind Customer.NumberOfRequiredMaintenances, Mode=OneWay}" />
+                        </primitives:Case>
+                        <primitives:Case
+                            Value="false">
+                            <winui:InfoBadge
+                                Style="{StaticResource SuccessIconInfoBadgeStyle}" />
+                        </primitives:Case>
+                    </primitives:SwitchPresenter>
+                </primitives:Case>
+                <primitives:Case
+                    Value="false">
+                    <winui:InfoBadge
+                        Style="{StaticResource InformationalIconInfoBadgeStyle}">
+                        <winui:InfoBadge.IconSource>
+                            <winui:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xf140;" />
+                        </winui:InfoBadge.IconSource>
+                    </winui:InfoBadge>
+                </primitives:Case>
+            </primitives:SwitchPresenter>
         </Grid>
     </Grid>
 </UserControl>

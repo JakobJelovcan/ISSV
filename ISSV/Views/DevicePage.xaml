@@ -92,16 +92,18 @@
                             <AppBarButton
                                 Icon="Edit"
                                 Label="Edit"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="EditDeviceButton_Click" />
                             <AppBarButton
                                 Icon="Delete"
                                 Label="Delete"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="DeleteDeviceButton_Click" />
                             <AppBarButton
                                 Icon="Add"
                                 Label="Add"
                                 IsCompact="True"
-                                Click="AddMaintenanceButton_Click"/>
+                                Click="AddMaintenanceButton_Click" />
                         </CommandBar>
                     </Grid>
                 </DataTemplate>
@@ -109,7 +111,20 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Maintenance">
                     <controls:MaintenanceControl
-                        Margin="-12,2,-10,2" />
+                        Margin="-12,2,-10,2">
+                        <controls:MaintenanceControl.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    Icon="Edit"
+                                    Text="Edit"
+                                    Click="EditMenuFlyoutItem_Click" />
+                                <MenuFlyoutItem
+                                    Icon="Delete"
+                                    Text="Delete"
+                                    Click="DeleteMenuFlyoutItem_Click" />
+                            </MenuFlyout>
+                        </controls:MaintenanceControl.ContextFlyout>
+                    </controls:MaintenanceControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

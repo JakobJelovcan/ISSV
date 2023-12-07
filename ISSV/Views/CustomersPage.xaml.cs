@@ -53,26 +53,23 @@ namespace ISSV.Views
             await customerDialog.ShowAsync();
         }
 
-        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            if (sender is MenuFlyoutItem flyoutItem && flyoutItem.DataContext is Customer customer)
-            {
-                CustomerContentDialog customerDialog = new CustomerContentDialog(customer);
-                await customerDialog.ShowAsync();
-            }
-        }
-
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
-
         private void CustomerGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Customer customer)
             {
                 NavigationService.Navigate<CustomerPage>(customer);
             }
+        }
+
+        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            CustomerContentDialog dialog = new CustomerContentDialog((sender as MenuFlyoutItem).DataContext as Customer);
+            await dialog.ShowAsync();
+        }
+
+        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
         }
     }
 }

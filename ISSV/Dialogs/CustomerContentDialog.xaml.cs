@@ -1,5 +1,4 @@
 ﻿using ISSV.Core.Models;
-using ISSV.Core.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,6 +12,20 @@ namespace ISSV.Dialogs
         {
             this.InitializeComponent();
             this.Customer = customer;
+            if (Customer != null)
+            {
+                CustomerName = Customer.Name;
+                PhoneNumber = Customer.PhoneNumber;
+                Email = Customer.Email;
+                Active = Customer.Active;
+                ApplyToChildren = false;
+                Title = "Edit customer";
+            }
+            else
+            {
+                Title = "Create customer";
+                Active = true;
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -50,14 +63,6 @@ namespace ISSV.Dialogs
         public static readonly DependencyProperty EmailProperty =
             DependencyProperty.Register("Email", typeof(string), typeof(CustomerContentDialog), new PropertyMetadata(string.Empty));
 
-        public string Address
-        {
-            get { return (string)GetValue(AddressProperty); }
-            set { SetValue(AddressProperty, value); }
-        }
-        public static readonly DependencyProperty AddressProperty =
-            DependencyProperty.Register("Address", typeof(string), typeof(CustomerContentDialog), new PropertyMetadata(string.Empty));
-
         public bool Active
         {
             get { return (bool)GetValue(ActiveProperty); }
@@ -65,5 +70,13 @@ namespace ISSV.Dialogs
         }
         public static readonly DependencyProperty ActiveProperty =
             DependencyProperty.Register("Active", typeof(bool), typeof(CustomerContentDialog), new PropertyMetadata(false));
+
+        public bool ApplyToChildren
+        {
+            get { return (bool)GetValue(ApplyToChildrenProperty); }
+            set { SetValue(ApplyToChildrenProperty, value); }
+        }
+        public static readonly DependencyProperty ApplyToChildrenProperty =
+            DependencyProperty.Register("ApplyToChildren", typeof(bool), typeof(CustomerContentDialog), new PropertyMetadata(false));
     }
 }

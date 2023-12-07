@@ -104,10 +104,10 @@ namespace ISSV.Core.Models
         public int NumberOfDevices => Devices.Count;
 
         [NotMapped]
-        public int NumberOfRequiredMaintenances => Devices.Where(d => d.RequiresMaintenance).Count();
+        public int NumberOfRequiredMaintenances => Devices.Where(d => d.RequiresMaintenance && d.Active).Count();
 
         [NotMapped]
-        public bool RequiresMaintenances => NumberOfRequiredMaintenances > 0;
+        public bool RequiresMaintenances => (NumberOfRequiredMaintenances > 0) && Active;
 
         public List<Device> Devices { get; private set; }
 

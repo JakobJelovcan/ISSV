@@ -95,23 +95,38 @@
                             <AppBarButton
                                 Icon="Edit"
                                 Label="Edit"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="EditCustomerButton_Click" />
                             <AppBarButton
                                 Icon="Delete"
                                 Label="Delete"
-                                IsCompact="True" />
+                                IsCompact="True"
+                                Click="DeleteCustomerButton_Click" />
                             <AppBarButton
                                 Icon="Add"
                                 Label="Add"
                                 IsCompact="True"
-                                Click="AppBarButton_Click"/>
+                                Click="AddLocationButton_Click" />
                         </CommandBar>
                     </Grid>
                 </DataTemplate>
             </GridView.HeaderTemplate>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Location">
-                    <controls:LocationControl />
+                    <controls:LocationControl>
+                        <controls:LocationControl.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    Icon="Edit"
+                                    Text="Edit"
+                                    Click="EditMenuFlyoutItem_Click" />
+                                <MenuFlyoutItem
+                                    Icon="Delete"
+                                    Text="Delete"
+                                    Click="DeleteMenuFlyoutItem_Click" />
+                            </MenuFlyout>
+                        </controls:LocationControl.ContextFlyout>
+                    </controls:LocationControl>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

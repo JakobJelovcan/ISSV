@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:primitives="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -51,9 +52,28 @@
             Grid.Column="1"
             VerticalAlignment="Top"
             CornerRadius="{StaticResource ControlCornerRadius}">
-            <winui:InfoBadge
-                Style="{StaticResource AttentionIconInfoBadgeStyle}"
-                />
+            <primitives:SwitchPresenter
+                TargetType="x:Boolean"
+                Value="{x:Bind Maintenance.RegularMaintenance, Mode=OneWay}">
+                <primitives:Case
+                    Value="true">
+                    <winui:InfoBadge
+                        Style="{StaticResource AttentionIconInfoBadgeStyle}">
+                        <winui:InfoBadge.IconSource>
+                            <winui:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xed5a;" />
+                        </winui:InfoBadge.IconSource>
+                    </winui:InfoBadge>
+                </primitives:Case>
+                <primitives:Case
+                    Value="false">
+                    <winui:InfoBadge
+                        Style="{StaticResource AttentionIconInfoBadgeStyle}">
+                        <winui:InfoBadge.IconSource>
+                            <winui:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xe946;" />
+                        </winui:InfoBadge.IconSource>
+                    </winui:InfoBadge>
+                </primitives:Case>
+            </primitives:SwitchPresenter>
         </Grid>
     </Grid>
 </UserControl>

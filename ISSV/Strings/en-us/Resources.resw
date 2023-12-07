@@ -125,8 +125,8 @@
     <value>ISSV</value>
     <comment>Application description</comment>
   </data>
-  <data name="Shell_Customer.Content" xml:space="preserve">
-    <value>Customer</value>
+  <data name="Shell_Customers.Content" xml:space="preserve">
+    <value>Customers</value>
     <comment>Navigation view item name for Customer</comment>
   </data>
   <data name="Map_YourLocation" xml:space="preserve">
@@ -172,17 +172,5 @@
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
     <comment>Personalization text for Settings</comment>
-  </data>
-  <data name="Shell_Location.Content" xml:space="preserve">
-    <value>Location</value>
-    <comment>Navigation view item name for Location</comment>
-  </data>
-  <data name="Shell_Device.Content" xml:space="preserve">
-    <value>Device</value>
-    <comment>Navigation view item name for Device</comment>
-  </data>
-  <data name="Shell_Maintenance.Content" xml:space="preserve">
-    <value>Maintenance</value>
-    <comment>Navigation view item name for Maintenance</comment>
   </data>
 </root>

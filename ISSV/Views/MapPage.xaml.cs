@@ -18,14 +18,10 @@ namespace ISSV.Views
 {
     public sealed partial class MapPage : Page, INotifyPropertyChanged
     {
-        private static readonly HashSet<int> SelectedLocations = new HashSet<int>();
-
-        // TODO: Set your preferred default zoom level
         private const double DefaultZoomLevel = 17;
 
         private readonly LocationService _locationService;
 
-        // TODO: Set your preferred default location if a geolock can't be found.
         private readonly BasicGeoposition _defaultPosition = new BasicGeoposition()
         {
             Latitude = 47.609425,
@@ -50,7 +46,7 @@ namespace ISSV.Views
             set { Set(ref _center, value); }
         }
 
-        public ObservableCollection<Customer> Source { get; } = new ObservableCollection<Customer>();
+        public ObservableCollection<FilterItem> Source { get; } = new ObservableCollection<FilterItem>();
 
         public MapColorScheme MapColorScheme
         {
@@ -80,16 +76,16 @@ namespace ISSV.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await InitializeAsync();
-            var customers = DataService.Customers.Include(c => c.Locations).ThenInclude(l => l.Address);
+            var customers = DataService.Customers.Include(c => c.Locations).ThenInclude(l => l.Address).OrderBy(c => c.Name);
             foreach (var customer in customers)
             {
-                Source.Add(customer);
+                Source.Add(new FilterItem(customer));
             }
 
             if (mapControl != null)
             {
                 mapControl.Layers.Add(_layer);
-                AddMapIcons();
+                UpdateMapIcons();
             }
         }
 
@@ -139,41 +135,69 @@ namespace ISSV.Views
             }
         }
 
-        private void AddMapIcons()
+        private void UpdateMapIcons()
         {
             var mapElements = new List<MapElement>();
-            foreach (var location in DataService.Locations.Include(l => l.Customer).Include(l => l.Address))
+            foreach (var filterItem in Source)
             {
-                location.PropertyChanged += DisplayOnMapChanged;
-                location.Customer.PropertyChanged += DisplayOnMapChanged;
-
-                if (SelectedLocations.Contains(location.Id))
+                if (filterItem.IsChecked)
                 {
-                    var geoPosition = new BasicGeoposition { Latitude = location.Address.Latitude, Longitude = location.Address.Longitude };
-                    var geoPoint = new Geopoint(geoPosition);
-                    var mapIcon = new MapIcon()
+                    foreach (var location in filterItem.Customer.Locations)
                     {
-                        Location = geoPoint,
-                        NormalizedAnchorPoint = new Point(0.5, 1.0),
-                        Title = location.Address.Name,
-                        ZIndex = 0,
-                        Tag = location,
-                    };
-                    mapElements.Add(mapIcon);
+                        var geoPosition = new BasicGeoposition { Latitude = location.Address.Latitude, Longitude = location.Address.Longitude };
+                        var geoPoint = new Geopoint(geoPosition);
+                        var mapIcon = new MapIcon()
+                        {
+                            Location = geoPoint,
+                            NormalizedAnchorPoint = new Point(0.5, 1.0),
+                            Title = location.Address.Name,
+                            ZIndex = 0,
+                            Tag = location,
+                        };
+                        mapElements.Add(mapIcon);
+                    }
                 }
             }
             _layer.MapElements = mapElements;
         }
 
-        private void DisplayOnMapChanged(object sender, PropertyChangedEventArgs e)
+        private void FilterButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (e.PropertyName == "DisplayOnMap")
-            {
-                AddMapIcons();
-            }
+            MapSplitView.IsPaneOpen ^= true;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private void ShowAllButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            foreach (var filterItem in Source)
+            {
+                filterItem.IsChecked = true;
+            }
+            UpdateMapIcons();
+        }
+
+        private void HideAllButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            foreach (var filterItem in Source)
+            {
+                filterItem.IsChecked = false;
+            }
+            UpdateMapIcons();
+        }
+
+        private void MapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            UpdateMapIcons();
+        }
+
+        private void CheckBox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            UpdateMapIcons();
+        }
 
         private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
@@ -186,26 +210,46 @@ namespace ISSV.Views
         }
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 
-        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    public class FilterItem : INotifyPropertyChanged
+    {
+        public FilterItem(Customer customer)
         {
-            MapSplitView.IsPaneOpen ^= true;
+            IsChecked = true;
+            Customer = customer;
         }
 
-        private void treeView_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        public bool IsChecked
         {
-            var selectedItems = treeView.SelectedItems.Where(i => i is Location).Select(i => (i as Location).Id);
-            if (!SelectedLocations.SetEquals(selectedItems))
+            get { return isChecked; }
+            set
             {
-                SelectedLocations.Clear();
-                SelectedLocations.UnionWith(selectedItems);
-                AddMapIcons();
+                if (isChecked != value)
+                {
+                    isChecked = value;
+                    RaisePropertyChanged(nameof(IsChecked));
+                }
             }
         }
+        private bool isChecked;
 
-        private void mapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        public Customer Customer
         {
-
+            get { return customer; }
+            set
+            {
+                if (customer != value)
+                {
+                    customer = value;
+                    RaisePropertyChanged(nameof(Customer));
+                }
+            }
         }
+        private Customer customer;
+
+        private void RaisePropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

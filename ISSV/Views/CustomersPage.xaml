@@ -9,33 +9,42 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <CommandBar
-            x:Name="CustomerCommandBar"
-            Margin="56,0,56,0"
-            IsOpen="False"
-            DefaultLabelPosition="Right"
-            Background="Transparent">
-            <AppBarButton
-                Icon="Add"
-                Label="Add"
-                IsCompact="True"
-                Click="AddCustomerButton_Click"/>
-        </CommandBar>
-
         <GridView
             x:Name="CustomerGridView"
-            Grid.Row="1"
             Padding="56,0,56,0"
             IsItemClickEnabled="True"
             ItemClick="CustomerGridView_ItemClick"
             ItemsSource="{x:Bind Source, Mode=OneWay}">
+            <GridView.HeaderTemplate>
+                <DataTemplate>
+                    <CommandBar
+                        IsOpen="False"
+                        DefaultLabelPosition="Right"
+                        Background="Transparent">
+                        <AppBarButton
+                            Icon="Add"
+                            Label="Add"
+                            IsCompact="True"
+                            Click="AddCustomerButton_Click" />
+                    </CommandBar>
+                </DataTemplate>
+            </GridView.HeaderTemplate>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Customer">
-                    <controls:CustomerControl />
+                    <controls:CustomerControl>
+                        <controls:CustomerControl.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        Icon="Edit"
+                                        Text="Edit"
+                                        Click="EditMenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem
+                                        Icon="Delete"
+                                        Text="Delete"
+                                        Click="DeleteMenuFlyoutItem_Click" />
+                                </MenuFlyout>
+                        </controls:CustomerControl.ContextFlyout>
+                    </controls:CustomerControl>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

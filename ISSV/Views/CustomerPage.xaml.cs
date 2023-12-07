@@ -1,12 +1,14 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Dialogs;
 using ISSV.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
+using Windows.UI.Composition;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -68,6 +70,34 @@ namespace ISSV.Views
             {
                 NavigationService.Navigate<LocationPage>(location);
             }
+        }
+
+        private async void EditCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            CustomerContentDialog dialog = new CustomerContentDialog(Customer);
+            await dialog.ShowAsync();
+        }
+
+        private void DeleteCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //TODO: Delete dialog
+        }
+
+        private async void AddLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            LocationContentDialog dialog = new LocationContentDialog(null);
+            await dialog.ShowAsync();
+        }
+
+        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            LocationContentDialog dialog = new LocationContentDialog((sender as MenuFlyoutItem).DataContext as Location);
+            await dialog.ShowAsync();
+        }
+
+        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //TODO: Delete dialog
         }
     }
 }

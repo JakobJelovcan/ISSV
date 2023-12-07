@@ -8,26 +8,11 @@
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:ISSV.Core.Models"
     xmlns:helpers="using:ISSV.Helpers"
+    xmlns:local="using:ISSV.Views"
     Style="{StaticResource PageStyle}"
     xmlns:behaviors="using:ISSV.Behaviors"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
-    <Page.Resources>
-        <DataTemplate x:Key="CustomerDataTemplate" x:DataType="models:Customer">
-            <winui:TreeViewItem
-                Tapped="treeView_Tapped"
-                Content="{x:Bind Name, Mode=OneWay}"
-                ItemsSource="{x:Bind Locations, Mode=OneWay}" />
-        </DataTemplate>
-        <DataTemplate x:Key="LocationDataTemplate" x:DataType="models:Location">
-            <winui:TreeViewItem
-                Tapped="treeView_Tapped"
-                Content="{x:Bind Address.Name, Mode=OneWay}" />
-        </DataTemplate>
-        <helpers:MapFilterDataTemplateSelector x:Key="MapFilterDataTemplateSelector"
-            Customer="{StaticResource CustomerDataTemplate}"
-            Location="{StaticResource LocationDataTemplate}" />
-    </Page.Resources>
     <Grid>
         <CommandBar
             IsOpen="False"
@@ -36,26 +21,48 @@
             VerticalAlignment="Top"
             Canvas.ZIndex="1">
             <AppBarButton
+                Label="Show all"
+                IsCompact="True"
+                Click="ShowAllButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe7b3;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Label="Hide all"
+                IsCompact="True"
+                Click="HideAllButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xed1a;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
                 Icon="Filter"
                 Label="Filter"
                 IsCompact="True"
-                Click="AppBarButton_Click"/>
+                Click="FilterButton_Click"/>
         </CommandBar>
         <SplitView
             x:Name="MapSplitView"
             Grid.Row="1"
-            IsPaneOpen="True"
+            IsPaneOpen="False"
             DisplayMode="Overlay"
             PaneBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             PanePlacement="Right">
             <SplitView.Pane>
-                <winui:TreeView
-                    x:Name="treeView"
-                    ItemsSource="{x:Bind Source, Mode=OneWay}"
+                <ListView
                     Margin="0,48,0,0"
-                    SelectionMode="Multiple"
-                    ItemTemplateSelector="{StaticResource MapFilterDataTemplateSelector}">
-                </winui:TreeView>
+                    ItemsSource="{x:Bind Source, Mode=OneWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:FilterItem">
+                            <CheckBox
+                                IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
+                                Content="{x:Bind Customer.Name, Mode=OneWay}"
+                                Checked="CheckBox_Checked"
+                                Unchecked="CheckBox_Unchecked" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </SplitView.Pane>
             <maps:MapControl
                 x:Name="mapControl"
@@ -63,7 +70,7 @@
                 ColorScheme="{x:Bind MapColorScheme, Mode=OneWay}"
                 ZoomLevel="{x:Bind ZoomLevel, Mode=OneWay}"
                 Center="{x:Bind Center, Mode=OneWay}"
-                MapElementClick="mapControl_MapElementClick"/>
+                MapElementClick="MapControl_MapElementClick"/>
         </SplitView>
     </Grid>
 </Page>

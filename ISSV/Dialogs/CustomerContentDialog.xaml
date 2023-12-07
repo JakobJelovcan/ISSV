@@ -5,6 +5,7 @@
     xmlns:local="using:ISSV.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Title="TITLE"
     DefaultButton="Primary"
@@ -14,14 +15,11 @@
     CloseButtonClick="ContentDialog_CloseButtonClick">
 
     <Grid>
-        <StackPanel>
+        <StackPanel
+            Spacing="10">
             <TextBox
                 Header="Customer name"
                 Text="{x:Bind CustomerName, Mode=TwoWay}" />
-            
-            <AutoSuggestBox
-                Header="Address"
-                Text="{x:Bind Address, Mode=TwoWay}" />
             
             <TextBox
                 Header="Phone number"
@@ -31,9 +29,19 @@
                 Header="Email"
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
-            <CheckBox
-                Content="Active"
-                IsChecked="{x:Bind Active, Mode=TwoWay}" />
+            <winui:Expander
+                HorizontalAlignment="Stretch">
+                <winui:Expander.Header>
+                    <CheckBox
+                        Content="Active"
+                        IsChecked="{x:Bind Active, Mode=TwoWay}" />
+                </winui:Expander.Header>
+                <winui:Expander.Content>
+                    <CheckBox
+                        Content="Apply to children"
+                        IsChecked="{x:Bind ApplyToChildren, Mode=TwoWay}" />
+                </winui:Expander.Content>
+            </winui:Expander>
         </StackPanel>
     </Grid>
 </ContentDialog>
