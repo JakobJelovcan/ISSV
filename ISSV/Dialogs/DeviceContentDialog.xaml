@@ -7,15 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
+    Style="{StaticResource DefaultContentDialogStyle}"
     Title="TITLE"
     DefaultButton="Primary"
     PrimaryButtonText="Confirm"
     CloseButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    CloseButtonClick="ContentDialog_CloseButtonClick">
+    CloseButtonClick="ContentDialog_CloseButtonClick"
+    Width="500"
+    Height="450">
 
-    <Grid>
-        <StackPanel>
+    <Grid
+        Width="480"
+        Height="430">
+        <StackPanel
+            Spacing="10">
             <TextBox
                 Header="Device type"
                 Text="{x:Bind DeviceType, Mode=TwoWay}" />

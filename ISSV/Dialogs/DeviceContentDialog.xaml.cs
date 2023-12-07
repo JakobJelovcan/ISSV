@@ -12,7 +12,22 @@ namespace ISSV.Dialogs
         public DeviceContentDialog(Device device)
         {
             this.InitializeComponent();
-            this.device = device;
+            this.Device = device;
+            if (Device != null)
+            {
+                DeviceType = device.DeviceType;
+                SerialNumber = device.SerialNumber;
+                Active = device.Active;
+                MaintenanceFrequency = device.MaintenanceFrequency;
+                WarrantyPeriod = device.WarrantyPeriod;
+                InstallationDate = device.InstallationDate;
+                Title = "Edit device";
+            }
+            else
+            {
+                Title = "Create device";
+                Active = true;
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -23,7 +38,7 @@ namespace ISSV.Dialogs
         {
         }
 
-        private Device device { get; set; }
+        private Device Device { get; set; }
 
         public string DeviceType
         {

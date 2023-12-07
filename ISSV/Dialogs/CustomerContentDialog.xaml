@@ -11,10 +11,14 @@
     DefaultButton="Primary"
     PrimaryButtonText="Confirm"
     CloseButtonText="Cancel"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    Height="450"
+    Width="500"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     CloseButtonClick="ContentDialog_CloseButtonClick">
-
-    <Grid>
+    <Grid
+        Height="430"
+        Width="480">
         <StackPanel
             Spacing="10">
             <TextBox
@@ -30,7 +34,8 @@
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
             <winui:Expander
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left">
                 <winui:Expander.Header>
                     <CheckBox
                         Content="Active"

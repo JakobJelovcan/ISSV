@@ -119,6 +119,9 @@
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives">
       <Version>8.0.230907</Version>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.0.230907</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
@@ -153,6 +156,9 @@
     </Compile>
     <Compile Include="Dialogs\CustomerContentDialog.xaml.cs">
       <DependentUpon>CustomerContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DeviceContentDialog.xaml.cs">
       <DependentUpon>DeviceContentDialog.xaml</DependentUpon>
@@ -217,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\CustomerContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DeleteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

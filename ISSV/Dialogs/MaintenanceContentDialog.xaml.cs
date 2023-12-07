@@ -12,18 +12,34 @@ namespace ISSV.Dialogs
         public MaintenanceContentDialog(Maintenance maintenance)
         {
             this.InitializeComponent();
-            this.maintenance = maintenance;
+            this.Maintenance = maintenance;
+            if (Maintenance != null)
+            {
+                Date = Maintenance.Date;
+                Reason = Maintenance.Reason;
+                WorkDone = Maintenance.WorkDone;
+                Notes = Maintenance.Notes;
+                WorkOrder = Maintenance.WorkOrder;
+                Repairman = Maintenance.Repairman;
+                RegularMaintenance = Maintenance.RegularMaintenance;
+                Title = "Edit maintenance";
+            }
+            else
+            {
+                Title = "Create maintenance";
+                RegularMaintenance = true;
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
 
-        private Maintenance maintenance { get; set; }
+        private Maintenance Maintenance { get; set; }
 
         public DateTimeOffset Date
         {

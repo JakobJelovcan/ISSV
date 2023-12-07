@@ -1,4 +1,10 @@
 ﻿using ISSV.Core.Models;
+using ISSV.Core.Services;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Services.Maps;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -31,6 +37,7 @@ namespace ISSV.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+
         }
 
         private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -38,7 +45,34 @@ namespace ISSV.Dialogs
 
         }
 
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            Addresses.Clear();
+            var addresses = DataService.Addresses.Where(a => a.Name.StartsWith(sender.Text));
+            foreach (var address in addresses)
+            {
+                Addresses.Add(address.Name);
+            }
+            if (!addresses.Any())
+            {
+                Addresses.Add("No results found");
+            }
+        }
+
+        private async Task<Address> CreateAddress(string address)
+        {
+            var res = await MapLocationFinder.FindLocationsAsync(address, null, 1);
+            if (res.Status == MapLocationFinderStatus.Success && res.Locations.Any())
+            {
+                var position = res.Locations.FirstOrDefault().Point.Position;
+                return new Address(address, position.Latitude, position.Longitude);
+            }
+            return null;
+        }
+
         private Location Location { get; set; }
+
+        private ObservableCollection<string> Addresses { get; } = new ObservableCollection<string>();
 
         public string LocationName
         {

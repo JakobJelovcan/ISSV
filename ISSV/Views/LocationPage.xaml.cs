@@ -83,5 +83,16 @@ namespace ISSV.Views
             DeviceContentDialog dialog = new DeviceContentDialog(null);
             await dialog.ShowAsync();
         }
+
+        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DeviceContentDialog dialog = new DeviceContentDialog((sender as MenuFlyoutItem).DataContext as Device);
+            await dialog.ShowAsync();
+        }
+
+        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //TODO: Delete dialog
+        }
     }
 }
