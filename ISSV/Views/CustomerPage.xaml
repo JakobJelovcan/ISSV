@@ -119,11 +119,11 @@
                                 <MenuFlyoutItem
                                     Icon="Edit"
                                     Text="Edit"
-                                    Click="EditMenuFlyoutItem_Click" />
+                                    Click="EditLocationButton_Click" />
                                 <MenuFlyoutItem
                                     Icon="Delete"
                                     Text="Delete"
-                                    Click="DeleteMenuFlyoutItem_Click" />
+                                    Click="DeleteLocationButton_Click" />
                             </MenuFlyout>
                         </controls:LocationControl.ContextFlyout>
                     </controls:LocationControl>

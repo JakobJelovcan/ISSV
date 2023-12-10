@@ -15,7 +15,7 @@
             Grid.Row="1"
             Padding="56,0,56,0"
             IsItemClickEnabled="True"
-            ItemClick="GridView_ItemClick"
+            ItemClick="ListView_ItemClick"
             Header="{x:Bind Device, Mode=OneWay}"
             ItemsSource="{x:Bind Source, Mode=OneWay}">
             <ListView.HeaderTemplate>
@@ -117,11 +117,11 @@
                                 <MenuFlyoutItem
                                     Icon="Edit"
                                     Text="Edit"
-                                    Click="EditMenuFlyoutItem_Click" />
+                                    Click="EditMaintenanceButton_Click" />
                                 <MenuFlyoutItem
                                     Icon="Delete"
                                     Text="Delete"
-                                    Click="DeleteMenuFlyoutItem_Click" />
+                                    Click="DeleteMaintenanceButton_Click" />
                             </MenuFlyout>
                         </controls:MaintenanceControl.ContextFlyout>
                     </controls:MaintenanceControl>

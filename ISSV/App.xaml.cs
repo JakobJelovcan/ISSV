@@ -1,7 +1,5 @@
-﻿using System;
-
-using ISSV.Services;
-
+﻿using ISSV.Services;
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;

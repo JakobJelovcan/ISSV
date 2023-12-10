@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -25,7 +25,7 @@ namespace ISSV.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var customers = DataService.Customers.Include(c => c.Locations).ThenInclude(l => l.Devices).ThenInclude(d => d.Maintenances);
+            var customers = DataService.Customers.Include(c => c.Locations).ThenInclude(l => l.Devices).ThenInclude(d => d.Maintenances).OrderBy(c => c.Name);
             foreach (var customer in customers)
             {
                 Source.Add(customer);
@@ -49,8 +49,12 @@ namespace ISSV.Views
 
         private async void AddCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            CustomerContentDialog customerDialog = new CustomerContentDialog(null);
-            await customerDialog.ShowAsync();
+            var dialog = new CustomerContentDialog(null);
+            var res = await dialog.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Source.Add(dialog.Customer);
+            }
         }
 
         private void CustomerGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -63,13 +67,24 @@ namespace ISSV.Views
 
         private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            CustomerContentDialog dialog = new CustomerContentDialog((sender as MenuFlyoutItem).DataContext as Customer);
-            await dialog.ShowAsync();
+            if ((sender as MenuFlyoutItem).DataContext is Customer customer)
+            {
+                await new CustomerContentDialog(customer).ShowAsync();
+            }
         }
 
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            if ((sender as MenuFlyoutItem).DataContext is Customer customer)
+            {
+                var res = await new DeleteDialog().ShowAsync();
+                if (res == ContentDialogResult.Primary)
+                {
+                    customer.Delete();
+                    Source.Remove(customer);
+                    await DataService.SaveChangesAsync();
+                }
+            }
         }
     }
 }

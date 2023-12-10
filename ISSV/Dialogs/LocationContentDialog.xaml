@@ -14,7 +14,6 @@
     PrimaryButtonText="Confirm"
     CloseButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    CloseButtonClick="ContentDialog_CloseButtonClick"
     Height="450"
     Width="500">
 
@@ -41,20 +40,10 @@
                 Header="Email"
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
-            <winui:Expander
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left">
-                <winui:Expander.Header>
-                    <CheckBox
-                        Content="Active"
-                        IsChecked="{x:Bind Active, Mode=TwoWay}" />
-                </winui:Expander.Header>
-                <winui:Expander.Content>
-                    <CheckBox
-                        Content="Apply to children"
-                        IsChecked="{x:Bind ApplyToChildren, Mode=TwoWay}" />
-                </winui:Expander.Content>
-            </winui:Expander>                
+            <CheckBox
+                Content="Active"
+                IsEnabled="{x:Bind Customer.Active, Mode=OneWay}"
+                IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>
     </Grid>
 </ContentDialog>

@@ -1,4 +1,5 @@
 ﻿using ISSV.Core.Models;
+using ISSV.Core.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -18,7 +19,6 @@ namespace ISSV.Dialogs
                 PhoneNumber = Customer.PhoneNumber;
                 Email = Customer.Email;
                 Active = Customer.Active;
-                ApplyToChildren = false;
                 Title = "Edit customer";
             }
             else
@@ -28,13 +28,18 @@ namespace ISSV.Dialogs
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-        }
-
-        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-
+            if (Customer is null)
+            {
+                Customer = new Customer(Name, PhoneNumber, Email, Active);
+                DataService.Customers.Add(Customer);
+            }
+            else
+            {
+                Customer.Update(Name, PhoneNumber, Email, Active);
+            }
+            await DataService.SaveChangesAsync();
         }
 
         public Customer Customer { get; private set; }
@@ -70,13 +75,5 @@ namespace ISSV.Dialogs
         }
         public static readonly DependencyProperty ActiveProperty =
             DependencyProperty.Register("Active", typeof(bool), typeof(CustomerContentDialog), new PropertyMetadata(false));
-
-        public bool ApplyToChildren
-        {
-            get { return (bool)GetValue(ApplyToChildrenProperty); }
-            set { SetValue(ApplyToChildrenProperty, value); }
-        }
-        public static readonly DependencyProperty ApplyToChildrenProperty =
-            DependencyProperty.Register("ApplyToChildren", typeof(bool), typeof(CustomerContentDialog), new PropertyMetadata(false));
     }
 }

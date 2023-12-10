@@ -14,8 +14,7 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     Height="450"
     Width="500"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    CloseButtonClick="ContentDialog_CloseButtonClick">
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
     <Grid
         Height="430"
         Width="480">
@@ -33,20 +32,9 @@
                 Header="Email"
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
-            <winui:Expander
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left">
-                <winui:Expander.Header>
-                    <CheckBox
-                        Content="Active"
-                        IsChecked="{x:Bind Active, Mode=TwoWay}" />
-                </winui:Expander.Header>
-                <winui:Expander.Content>
-                    <CheckBox
-                        Content="Apply to children"
-                        IsChecked="{x:Bind ApplyToChildren, Mode=TwoWay}" />
-                </winui:Expander.Content>
-            </winui:Expander>
+            <CheckBox
+                Content="Active"
+                IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>
     </Grid>
 </ContentDialog>

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using ISSV.Helpers;
+using System;
 using System.Threading.Tasks;
-
-using ISSV.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;

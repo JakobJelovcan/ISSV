@@ -1,4 +1,5 @@
 ﻿using ISSV.Core.Models;
+using ISSV.Core.Services;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,10 +10,11 @@ namespace ISSV.Dialogs
 {
     public sealed partial class DeviceContentDialog : ContentDialog
     {
-        public DeviceContentDialog(Device device)
+        public DeviceContentDialog(Location location, Device device)
         {
             this.InitializeComponent();
             this.Device = device;
+            this.Location = location;
             if (Device != null)
             {
                 DeviceType = device.DeviceType;
@@ -30,15 +32,24 @@ namespace ISSV.Dialogs
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            if (Device is null)
+            {
+                Device = new Device(Location, DeviceType, SerialNumber, Active, MaintenanceFrequency, WarrantyPeriod, InstallationDate);
+                Location.AddDevice(Device);
+                DataService.Devices.Add(Device);
+            }
+            else
+            {
+                Device.Update(DeviceType, SerialNumber, Active, MaintenanceFrequency, WarrantyPeriod, InstallationDate);
+            }
+            await DataService.SaveChangesAsync();
         }
 
-        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
+        public Device Device { get; private set; }
 
-        private Device Device { get; set; }
+        private Location Location { get; set; }
 
         public string DeviceType
         {

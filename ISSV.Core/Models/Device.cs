@@ -1,4 +1,5 @@
 ﻿using ISSV.Core.Helpers;
+using ISSV.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -142,9 +143,38 @@ namespace ISSV.Core.Models
 
         public override int GetHashCode() => base.GetHashCode();
 
-        private void RaisePropertyChanged(string propertyName)
+        public void AddMaintenance(Maintenance maintenance)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Maintenances.Add(maintenance);
+            //TODO: Raise property changed
+        }
+
+        public void RemoveMaintenance(Maintenance maintenance)
+        {
+            Maintenances.Remove(maintenance);
+            //TODO: Raise property changed
+        }
+
+        public void Update(string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)
+        {
+            DeviceType = deviceType;
+            SerialNumber = serialNumber;
+            Active = active;
+            MaintenanceFrequency = maintenanceFrequency;
+            WarrantyPeriod = warrantyPeriod;
+            InstallationDate = installationDate;
+        }
+
+        public void Delete()
+        {
+            Maintenances.ToArray().ForEach(m => m.Delete());
+            DataService.Devices.Remove(this);
+            Location.RemoveDevice(this);
+        }
+
+        private void RaisePropertyChanged(params string[] args)
+        {
+            args.ForEach(a => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a)));
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

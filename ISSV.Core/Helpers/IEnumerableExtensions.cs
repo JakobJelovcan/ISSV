@@ -10,5 +10,12 @@ namespace ISSV.Core.Helpers
         {
             return source.Any() ? source.Max(selector) : def;
         }
+
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        {
+            foreach (T item in collection) action(item);
+            return collection;
+        }
     }
+
 }

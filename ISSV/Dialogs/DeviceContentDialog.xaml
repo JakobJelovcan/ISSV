@@ -13,7 +13,6 @@
     PrimaryButtonText="Confirm"
     CloseButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    CloseButtonClick="ContentDialog_CloseButtonClick"
     Width="500"
     Height="450">
 
@@ -54,6 +53,7 @@
 
             <CheckBox
                 Content="Active"
+                IsEnabled="{x:Bind Location.Active, Mode=OneWay}"
                 IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>
     </Grid>

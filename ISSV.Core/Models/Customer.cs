@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ISSV.Core.Helpers;
+using ISSV.Core.Services;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -77,6 +79,7 @@ namespace ISSV.Core.Models
                 {
                     active = value;
                     RaisePropertyChanged(nameof(Active));
+                    if (!active) Locations.ForEach(l => l.Active = false);
                 }
             }
         }
@@ -110,9 +113,35 @@ namespace ISSV.Core.Models
 
         public override int GetHashCode() => base.GetHashCode();
 
-        private void RaisePropertyChanged(string propertyName)
+        public void AddLocation(Location location)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Locations.Add(location);
+            //TODO: Raise property changed
+        }
+
+        internal void RemoveLocation(Location location)
+        {
+            Locations.Remove(location);
+            //TODO: Raise property changed
+        }
+
+        public void Update(string name, string phoneNumber, string email, bool active)
+        {
+            Name = name;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            Active = active;
+        }
+
+        public void Delete()
+        {
+            Locations.ToArray().ForEach(l => l.Delete());
+            DataService.Customers.Remove(this);
+        }
+
+        private void RaisePropertyChanged(params string[] args)
+        {
+            args.ForEach(a => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a)));
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

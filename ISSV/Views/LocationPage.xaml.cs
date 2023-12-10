@@ -36,7 +36,7 @@ namespace ISSV.Views
             if (e.Parameter is Location location)
             {
                 Location = DataService.Locations.Where(l => l.Equals(location)).FirstOrDefault();
-                var devices = DataService.Devices.Include(d => d.Location).Include(d => d.Maintenances).Where(d => d.Location.Equals(location));
+                var devices = DataService.Devices.Include(d => d.Location).Include(d => d.Maintenances).Where(d => d.Location.Equals(location)).OrderBy(d => d.DeviceType);
                 foreach (var device in devices)
                 {
                     Source.Add(device);
@@ -69,30 +69,47 @@ namespace ISSV.Views
 
         private async void EditLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            LocationContentDialog dialog = new LocationContentDialog(Location);
-            await dialog.ShowAsync();
+            await new LocationContentDialog(Location.Customer, Location).ShowAsync();
         }
 
-        private void DeleteLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            var res = await new DeleteDialog().ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Location.Delete();
+                await DataService.SaveChangesAsync();
+                NavigationService.GoBack();
+            }
         }
 
         private async void AddDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            DeviceContentDialog dialog = new DeviceContentDialog(null);
-            await dialog.ShowAsync();
+            var dialog = new DeviceContentDialog(Location, null);
+            var res = await dialog.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Source.Add(dialog.Device);
+            }
         }
 
-        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void EditDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            DeviceContentDialog dialog = new DeviceContentDialog((sender as MenuFlyoutItem).DataContext as Device);
-            await dialog.ShowAsync();
+            await new DeviceContentDialog(Location, (sender as MenuFlyoutItem).DataContext as Device).ShowAsync();
         }
 
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            if ((sender as MenuFlyoutItem).DataContext is Device device)
+            {
+                var res = await new DeleteDialog().ShowAsync();
+                if (res == ContentDialogResult.Primary)
+                {
+                    device.Delete();
+                    Source.Remove(device);
+                    await DataService.SaveChangesAsync();
+                }
+            }
         }
     }
 }

@@ -14,10 +14,11 @@ namespace ISSV.Dialogs
 {
     public sealed partial class LocationContentDialog : ContentDialog
     {
-        public LocationContentDialog(Location location)
+        public LocationContentDialog(Customer customer, Location location)
         {
             this.InitializeComponent();
             this.Location = location;
+            this.Customer = customer;
             if (Location != null)
             {
                 LocationName = Location.Name;
@@ -25,7 +26,6 @@ namespace ISSV.Dialogs
                 PhoneNumber = Location.PhoneNumber;
                 Email = Location.Email;
                 Active = Location.Active;
-                ApplyToChildren = false;
                 Title = "Edit location";
             }
             else
@@ -35,14 +35,26 @@ namespace ISSV.Dialogs
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            var address = DataService.Addresses.Where(a => a.Name == Address).FirstOrDefault() ?? await CreateAddress(Address);
+            if (address is null)
+            {
+                //TODO: Warning
+            }
 
-        }
+            if (Location is null)
+            {
+                Location = new Location(Customer, Name, address, PhoneNumber, Email, Active);
+                Customer.AddLocation(Location);
+                DataService.Locations.Add(Location);
+            }
+            else
+            {
+                Location.Update(Name, address, PhoneNumber, Email, Active);
+            }
 
-        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-
+            await DataService.SaveChangesAsync();
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -65,12 +77,16 @@ namespace ISSV.Dialogs
             if (res.Status == MapLocationFinderStatus.Success && res.Locations.Any())
             {
                 var position = res.Locations.FirstOrDefault().Point.Position;
-                return new Address(address, position.Latitude, position.Longitude);
+                var addr = new Address(address, position.Latitude, position.Longitude);
+                DataService.Addresses.Add(addr);
+                return addr;
             }
             return null;
         }
 
-        private Location Location { get; set; }
+        public Location Location { get; private set; }
+
+        private Customer Customer { get; set; }
 
         private ObservableCollection<string> Addresses { get; } = new ObservableCollection<string>();
 
@@ -113,13 +129,5 @@ namespace ISSV.Dialogs
         }
         public static readonly DependencyProperty ActiveProperty =
             DependencyProperty.Register("Active", typeof(bool), typeof(LocationContentDialog), new PropertyMetadata(false));
-
-        public bool ApplyToChildren
-        {
-            get { return (bool)GetValue(ApplyToChildrenProperty); }
-            set { SetValue(ApplyToChildrenProperty, value); }
-        }
-        public static readonly DependencyProperty ApplyToChildrenProperty =
-            DependencyProperty.Register("ApplyToChildren", typeof(bool), typeof(LocationContentDialog), new PropertyMetadata(false));
     }
 }

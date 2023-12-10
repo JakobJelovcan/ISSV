@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ISSV.Core.Helpers;
+using ISSV.Core.Services;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -139,11 +141,28 @@ namespace ISSV.Core.Models
 
         public override int GetHashCode() => base.GetHashCode();
 
-        private void RaisePropertyChanged(string propertyName)
+        public void Update(DateTimeOffset date, string reason, string workDone, string notes, string workOrder, string repairman, bool regularMaintenance)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Date = date;
+            Reason = reason;
+            WorkDone = workDone;
+            Notes = notes;
+            RegularMaintenance = regularMaintenance;
+            WorkOrder = workOrder;
+            Repairman = repairman;
+            RegularMaintenance = regularMaintenance;
         }
 
+        public void Delete()
+        {
+            DataService.Maintenances.Remove(this);
+            Device.RemoveMaintenance(this);
+        }
+
+        private void RaisePropertyChanged(params string[] args)
+        {
+            args.ForEach(a => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a)));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

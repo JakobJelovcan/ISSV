@@ -6,14 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE"
+    Title="Delete"
     Style="{StaticResource DefaultContentDialogStyle}"
+    Content="Do you really want to delete this item?"
     DefaultButton="Close"
     PrimaryButtonText="Confirm"
     CloseButtonText="Cancel"
     CloseButtonClick="ContentDialog_CloseButtonClick"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
-    <Grid>
-        
-    </Grid>
 </ContentDialog>

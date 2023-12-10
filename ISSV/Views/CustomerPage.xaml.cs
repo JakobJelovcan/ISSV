@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Windows.UI.Composition;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -36,7 +35,7 @@ namespace ISSV.Views
             if (e.Parameter is Customer customer)
             {
                 Customer = DataService.Customers.Where(c => c.Equals(customer)).FirstOrDefault();
-                var locations = DataService.Locations.Include(l => l.Address).Include(l => l.Devices).ThenInclude(d => d.Maintenances).Where(l => l.Customer.Equals(customer));
+                var locations = DataService.Locations.Include(l => l.Address).Include(l => l.Devices).ThenInclude(d => d.Maintenances).Where(l => l.Customer.Equals(customer)).OrderBy(l => l.Name);
                 foreach (var location in locations)
                 {
                     Source.Add(location);
@@ -59,11 +58,6 @@ namespace ISSV.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
-
         private void LocationGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Location location)
@@ -74,30 +68,47 @@ namespace ISSV.Views
 
         private async void EditCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            CustomerContentDialog dialog = new CustomerContentDialog(Customer);
-            await dialog.ShowAsync();
+            await new CustomerContentDialog(Customer).ShowAsync();
         }
 
-        private void DeleteCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteCustomerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            var res = await new DeleteDialog().ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Customer.Delete();
+                await DataService.SaveChangesAsync();
+                NavigationService.GoBack();
+            }
         }
 
         private async void AddLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            LocationContentDialog dialog = new LocationContentDialog(null);
-            await dialog.ShowAsync();
+            var dialog = new LocationContentDialog(Customer, null);
+            var res = await dialog.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Source.Add(dialog.Location);
+            }
         }
 
-        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void EditLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            LocationContentDialog dialog = new LocationContentDialog((sender as MenuFlyoutItem).DataContext as Location);
-            await dialog.ShowAsync();
+            await new LocationContentDialog(Customer, (sender as MenuFlyoutItem).DataContext as Location).ShowAsync();
         }
 
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteLocationButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            if ((sender as MenuFlyoutItem).DataContext is Location location)
+            {
+                var res = await new DeleteDialog().ShowAsync();
+                if (res == ContentDialogResult.Primary)
+                {
+                    location.Delete();
+                    Source.Remove(location);
+                    await DataService.SaveChangesAsync();
+                }
+            }
         }
     }
 }

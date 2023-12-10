@@ -35,8 +35,7 @@
                 IsOpen="False"
                 IsClosable="False"
                 Severity="Error"
-                VerticalAlignment="Stretch"
-                />
+                VerticalAlignment="Stretch" />
         </Grid>
         <winui:NavigationView
             x:Name="navigationView"

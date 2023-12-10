@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using ISSV.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;

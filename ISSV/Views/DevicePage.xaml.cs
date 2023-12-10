@@ -1,6 +1,7 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
 using ISSV.Dialogs;
+using ISSV.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -33,7 +34,7 @@ namespace ISSV.Views
             if (e.Parameter is Device device)
             {
                 Device = DataService.Devices.Where(d => d.Equals(device)).FirstOrDefault();
-                var maintenances = DataService.Maintenances.Where(m => m.Device.Equals(device));
+                var maintenances = DataService.Maintenances.Where(m => m.Device.Equals(device)).OrderByDescending(m => m.Date);
                 foreach (var maintenance in maintenances)
                 {
                     Source.Add(maintenance);
@@ -56,37 +57,57 @@ namespace ISSV.Views
 
         private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            if (e.ClickedItem is Maintenance maintenance)
+            {
+                NavigationService.Navigate<MaintenancePage>(maintenance);
+            }
         }
 
-        private async void EditMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void EditMaintenanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            MaintenanceContentDialog dialog = new MaintenanceContentDialog((sender as MenuFlyoutItem).DataContext as Maintenance);
-            await dialog.ShowAsync();
+            await new MaintenanceContentDialog(Device, (sender as MenuFlyoutItem).DataContext as Maintenance).ShowAsync();
         }
 
-        private void DeleteMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteMaintenanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            if ((sender as MenuFlyoutItem).DataContext is Maintenance maintenance)
+            {
+                var res = await new DeleteDialog().ShowAsync();
+                if (res == ContentDialogResult.Primary)
+                {
+                    maintenance.Delete();
+                    Source.Remove(maintenance);
+                    await DataService.SaveChangesAsync();
+                }
+            }
         }
 
         private async void EditDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            DeviceContentDialog dialog = new DeviceContentDialog(Device);
-            await dialog.ShowAsync();
+            await new DeviceContentDialog(Device.Location, Device).ShowAsync();
         }
 
-        private void DeleteDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteDeviceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            //TODO: Delete dialog
+            var res = await new DeleteDialog().ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Device.Delete();
+                await DataService.SaveChangesAsync();
+                NavigationService.GoBack();
+            }
         }
 
         private async void AddMaintenanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            MaintenanceContentDialog dialog = new MaintenanceContentDialog(null);
-            await dialog.ShowAsync();
+            var dialog = new MaintenanceContentDialog(Device, null);
+            var res = await dialog.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                Source.Add(dialog.Maintenance);
+            }
         }
     }
 }

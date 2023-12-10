@@ -1,12 +1,11 @@
-﻿using System;
+﻿using ISSV.Helpers;
+using ISSV.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-using ISSV.Helpers;
-using ISSV.Services;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.System;
@@ -14,7 +13,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-
 using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace ISSV.Views

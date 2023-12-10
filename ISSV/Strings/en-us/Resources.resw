@@ -173,4 +173,8 @@
     <value>Personalization</value>
     <comment>Personalization text for Settings</comment>
   </data>
+  <data name="Shell_Maintenance.Content" xml:space="preserve">
+    <value>Maintenance</value>
+    <comment>Navigation view item name for Maintenance</comment>
+  </data>
 </root>

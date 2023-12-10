@@ -1,8 +1,6 @@
-﻿using System;
+﻿using ISSV.Services;
+using System;
 using System.Threading.Tasks;
-
-using ISSV.Services;
-
 using Windows.ApplicationModel.Activation;
 
 namespace ISSV.Activation

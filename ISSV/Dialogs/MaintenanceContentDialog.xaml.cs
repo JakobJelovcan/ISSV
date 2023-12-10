@@ -1,4 +1,5 @@
 ﻿using ISSV.Core.Models;
+using ISSV.Core.Services;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,10 +10,11 @@ namespace ISSV.Dialogs
 {
     public sealed partial class MaintenanceContentDialog : ContentDialog
     {
-        public MaintenanceContentDialog(Maintenance maintenance)
+        public MaintenanceContentDialog(Device device, Maintenance maintenance)
         {
             this.InitializeComponent();
             this.Maintenance = maintenance;
+            this.Device = device;
             if (Maintenance != null)
             {
                 Date = Maintenance.Date;
@@ -31,15 +33,24 @@ namespace ISSV.Dialogs
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            if (Maintenance is null)
+            {
+                Maintenance = new Maintenance(Device, Date, Reason, WorkDone, Notes, WorkOrder, Repairman, RegularMaintenance);
+                Device.AddMaintenance(Maintenance);
+                DataService.Maintenances.Add(Maintenance);
+            }
+            else
+            {
+                Maintenance.Update(Date, Reason, WorkDone, Notes, WorkOrder, Repairman, RegularMaintenance);
+            }
+            await DataService.SaveChangesAsync();
         }
 
-        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
+        public Maintenance Maintenance { get; private set; }
 
-        private Maintenance Maintenance { get; set; }
+        private Device Device { get; set; }
 
         public DateTimeOffset Date
         {
