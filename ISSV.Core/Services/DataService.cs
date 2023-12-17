@@ -2,19 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 
 namespace ISSV.Core.Services
 {
     public static class DataService
     {
-        static DataService()
-        {
-            mySqlDataService = new MySqlDataService();
-            EnsureCreated();
-        }
-
-        private static readonly MySqlDataService mySqlDataService;
+        private static MySqlDataService mySqlDataService;
 
         public static DbSet<Customer> Customers => mySqlDataService.Customers;
 
@@ -26,19 +21,65 @@ namespace ISSV.Core.Services
 
         public static DbSet<Address> Addresses => mySqlDataService.Addresses;
 
-        public static void EnsureCreated()
+        public static bool IsConnected()
         {
-            ((RelationalDatabaseCreator)mySqlDataService.Database.GetService<IDatabaseCreator>()).EnsureCreated();
+            return mySqlDataService is MySqlDataService;
         }
 
-        public static void SaveChanges()
+        public static void Disconnect()
         {
-            mySqlDataService.SaveChanges();
+            if (IsConnected())
+            {
+                mySqlDataService.Dispose();
+                mySqlDataService = null;
+            }
+        }
+
+        public static async Task<bool> ConnectAsync(string username, string password)
+        {
+            var conn = new MySqlConnectionStringBuilder
+            {
+                UserID = username,
+                Password = password,
+                Port = 3306,
+                Server = "192.168.1.254",
+                Database = "issv",
+                SslMode = MySqlSslMode.None
+            };
+            try
+            {
+                var options = new DbContextOptionsBuilder<MySqlDataService>().UseMySql(conn.ConnectionString).Options;
+                var service = new MySqlDataService(options);
+                if (await service.Database.CanConnectAsync())
+                {
+                    mySqlDataService = service;
+                    await EnsureCreatedAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static async Task EnsureCreatedAsync()
+        {
+            await ((RelationalDatabaseCreator)mySqlDataService.Database.GetService<IDatabaseCreator>()).EnsureCreatedAsync();
         }
 
         public static async Task SaveChangesAsync()
         {
             await mySqlDataService.SaveChangesAsync();
+        }
+
+        public static async Task<bool> CanConnect()
+        {
+            return await mySqlDataService.Database.CanConnectAsync();
         }
     }
 }

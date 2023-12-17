@@ -6,9 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:ISSV.Core.Models"
     xmlns:controls="using:ISSV.Controls"
+    xmlns:headeredContols="using:CommunityToolkit.WinUI.Controls"
     xmlns:behaviors="using:ISSV.Behaviors"
-    Style="{StaticResource PageStyle}"
     behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
+    Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
         <ListView
@@ -23,7 +24,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
-                            <RowDefinition />
+                            <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <TextBlock
@@ -36,53 +37,65 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="400" />
+                                <ColumnDefinition MinWidth="200" MaxWidth="300" />
+                                <ColumnDefinition MinWidth="200" MaxWidth="300" />
                             </Grid.ColumnDefinitions>
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="0">
-                                <TextBlock
-                                    Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Serial number"/>
+
+                            <headeredContols:HeaderedContentControl
+                                Grid.Column="0"
+                                Grid.Row="0">
+                                <headeredContols:HeaderedContentControl.Header>
+                                    <TextBlock
+                                        Style="{StaticResource DetailSubTitleStyle}"
+                                        Text="Serial number"/>
+                                </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
                                     Text="{x:Bind SerialNumber, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="0"
-                                Grid.Column="1">
-                                <TextBlock
-                                    Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Installation date"/>
+                            </headeredContols:HeaderedContentControl>
+
+                            <headeredContols:HeaderedContentControl
+                                Grid.Column="1"
+                                Grid.Row="0">
+                                <headeredContols:HeaderedContentControl.Header>
+                                    <TextBlock
+                                        Style="{StaticResource DetailSubTitleStyle}"
+                                        Text="Installation date"/>
+                                </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
                                     Text="{x:Bind InstallationDate, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="1"
-                                Grid.Column="0">
-                                <TextBlock
-                                    Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Warranty period"/>
+                            </headeredContols:HeaderedContentControl>
+
+                            <headeredContols:HeaderedContentControl
+                                Grid.Column="0"
+                                Grid.Row="1">
+                                <headeredContols:HeaderedContentControl.Header>
+                                    <TextBlock
+                                        Style="{StaticResource DetailSubTitleStyle}"
+                                        Text="Warranty period"/>
+                                </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
                                     Text="{x:Bind WarrantyPeriod, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="1"
-                                Grid.Column="1">
-                                <TextBlock
-                                    Style="{StaticResource DetailSubTitleStyle}"
-                                    Text="Maintenance frequency"/>
+                            </headeredContols:HeaderedContentControl>
+
+                            <headeredContols:HeaderedContentControl
+                                Grid.Column="1"
+                                Grid.Row="1">
+                                <headeredContols:HeaderedContentControl.Header>
+                                    <TextBlock
+                                        Style="{StaticResource DetailSubTitleStyle}"
+                                        Text="Maintenance frequency"/>
+                                </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
                                     Text="{x:Bind MaintenanceFrequency, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
+                            </headeredContols:HeaderedContentControl>
                         </Grid>
                         <CommandBar
                             Grid.Row="2"

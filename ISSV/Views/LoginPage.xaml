@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="ISSV.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:ISSV.Core.Models"    
+    winui:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Border
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        CornerRadius="8"
+        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}">
+        <Grid
+            Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="Login" />
+
+            <TextBox
+                Text="{x:Bind UserName, Mode=TwoWay}"
+                Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+                Grid.Row="1"
+                Width="200"
+                PlaceholderText="Username" />
+
+            <PasswordBox
+                Password="{x:Bind Password, Mode=TwoWay}"
+                Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+                Grid.Row="2"
+                Width="200"
+                PlaceholderText="Password" />
+
+            <winui:InfoBar
+                Grid.Row="3"
+                VerticalContentAlignment="Center"
+                Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+                IsOpen="{x:Bind LoginFailed, Mode=OneWay}"
+                Message="Invalid username or password"
+                Severity="Error"
+                IsIconVisible="False"
+                IsClosable="False"/>
+
+            <winui:ProgressRing
+                x:Name="progressRing"
+                Visibility="Collapsed"
+                Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+                Grid.Row="4"/>
+
+            <Button
+                Grid.Row="5"
+                HorizontalAlignment="Center"
+                Style="{StaticResource AccentButtonStyle}"
+                Content="Login"
+                Click="LoginButton_Click"/>
+        </Grid>
+    </Border>
+</Page>

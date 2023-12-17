@@ -1,7 +1,10 @@
 ﻿using ISSV.Activation;
+using ISSV.Core.Helpers;
+using ISSV.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -19,11 +22,14 @@ namespace ISSV.Services
 
         private object _lastActivationArgs;
 
+        public IdentityService IdentityService => Singleton<IdentityService>.Instance;
+
         public ActivationService(App app, Type defaultNavItem, Lazy<UIElement> shell = null)
         {
             _app = app;
             _shell = shell;
             _defaultNavItem = defaultNavItem;
+            IdentityService.LoggedIn += OnLoggedIn;
         }
 
         public async Task ActivateAsync(object activationArgs)
@@ -33,6 +39,11 @@ namespace ISSV.Services
                 // Initialize services that you need before app activation
                 // take into account that the splash screen is shown while this code runs.
                 await InitializeAsync();
+
+                if (!IdentityService.IsLoggedIn())
+                {
+                    await RedirectLoginPageAsync();
+                }
 
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
@@ -45,7 +56,11 @@ namespace ISSV.Services
 
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page
-            await HandleActivationAsync(activationArgs);
+            if (IdentityService.IsLoggedIn())
+            {
+                await HandleActivationAsync(activationArgs);
+            }
+
             _lastActivationArgs = activationArgs;
 
             if (IsInteractive(activationArgs))
@@ -56,6 +71,32 @@ namespace ISSV.Services
                 // Tasks after activation
                 await StartupAsync();
             }
+        }
+
+        private async void OnLoggedIn(object sender, EventArgs e)
+        {
+            if (_shell?.Value != null)
+            {
+                Window.Current.Content = _shell.Value;
+            }
+            else
+            {
+                var frame = new Frame();
+                Window.Current.Content = frame;
+                NavigationService.Frame = frame;
+            }
+
+            await ThemeSelectorService.SetRequestedThemeAsync();
+            await HandleActivationAsync(_lastActivationArgs);
+        }
+
+        public async Task RedirectLoginPageAsync()
+        {
+            var frame = new Frame();
+            NavigationService.Frame = frame;
+            Window.Current.Content = frame;
+            await ThemeSelectorService.SetRequestedThemeAsync();
+            NavigationService.Navigate<LoginPage>();
         }
 
         private async Task InitializeAsync()

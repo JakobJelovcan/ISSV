@@ -17,6 +17,10 @@ namespace ISSV.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            if (e.Parameter is Maintenance maintenance)
+            {
+                Maintenance = maintenance;
+            }
         }
 
         public Maintenance Maintenance

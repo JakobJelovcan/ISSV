@@ -133,10 +133,6 @@
     <value>Your location</value>
     <comment>Your location text on map page</comment>
   </data>
-  <data name="Shell_Map.Content" xml:space="preserve">
-    <value>Map</value>
-    <comment>Navigation view item name for Map</comment>
-  </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>Choose Theme</value>
     <comment>Choose theme text for Settings</comment>
@@ -172,9 +168,5 @@
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
     <comment>Personalization text for Settings</comment>
-  </data>
-  <data name="Shell_Maintenance.Content" xml:space="preserve">
-    <value>Maintenance</value>
-    <comment>Navigation view item name for Maintenance</comment>
   </data>
 </root>

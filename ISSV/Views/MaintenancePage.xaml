@@ -4,10 +4,112 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Style="{StaticResource PageStyle}"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:behaviors="using:ISSV.Behaviors"
+    behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Grid
-        x:Name="ContentArea">
+        x:Name="ContentArea"
+        Margin="56,0,56,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" MaxWidth="300"/>
+            <ColumnDefinition MinWidth="200" MaxWidth="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="{x:Bind Maintenance.Device.DeviceType, Mode=OneWay}" />
+
+        <controls:HeaderedContentControl
+            Grid.Row="1"
+            Grid.Column="0">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Work order" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.WorkOrder, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
         
+        <controls:HeaderedContentControl
+            Grid.Row="1"
+            Grid.Column="1">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Maintenance date" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.Date, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
+        
+        <controls:HeaderedContentControl
+            Grid.Row="2"
+            Grid.Column="0">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Maintenance reason" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.Reason, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
+        
+        <controls:HeaderedContentControl
+            Grid.Row="2"
+            Grid.Column="1">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Repairman" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.Repairman, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
+
+        <controls:HeaderedContentControl
+            Grid.Row="3"
+            Grid.ColumnSpan="2">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Maintenance notes" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.Notes, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
+
+        <controls:HeaderedContentControl
+            Grid.Row="4"
+            Grid.ColumnSpan="2">
+            <controls:HeaderedContentControl.Header>
+                <TextBlock
+                    Style="{StaticResource DetailSubTitleStyle}"
+                    Text="Work done" />
+            </controls:HeaderedContentControl.Header>
+            <TextBlock
+                Style="{StaticResource DetailBodyBaseMediumStyle}"
+                Text="{x:Bind Maintenance.WorkDone, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"/>
+        </controls:HeaderedContentControl>
     </Grid>
 </Page>

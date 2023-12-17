@@ -116,6 +116,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.HeaderedControls">
+      <Version>8.0.230907</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives">
       <Version>8.0.230907</Version>
     </PackageReference>
@@ -174,6 +177,7 @@
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />
+    <Compile Include="Services\IdentityService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ThemeSelectorService.cs" />
@@ -188,6 +192,9 @@
     </Compile>
     <Compile Include="Views\DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MaintenancePage.xaml.cs">
       <DependentUpon>MaintenancePage.xaml</DependentUpon>
@@ -280,6 +287,10 @@
     <Page Include="Views\DevicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MaintenancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
