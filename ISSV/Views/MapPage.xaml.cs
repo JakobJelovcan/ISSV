@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Navigation;
@@ -21,6 +22,7 @@ namespace ISSV.Views
         private const double DefaultZoomLevel = 17;
 
         private readonly LocationService _locationService;
+        private readonly IRandomAccessStreamReference PinRed, PinOrange, PinGreen, PinGray;
 
         private readonly BasicGeoposition _defaultPosition = new BasicGeoposition()
         {
@@ -70,6 +72,10 @@ namespace ISSV.Views
             };
             Center = new Geopoint(_defaultPosition);
             ZoomLevel = DefaultZoomLevel;
+            PinGray = RandomAccessStreamReference.CreateFromUri(new System.Uri("ms-appx:///Assets/pin_gray.png"));
+            PinRed = RandomAccessStreamReference.CreateFromUri(new System.Uri("ms-appx:///Assets/pin_red.png"));
+            PinGreen = RandomAccessStreamReference.CreateFromUri(new System.Uri("ms-appx:///Assets/pin_green.png"));
+            PinOrange = RandomAccessStreamReference.CreateFromUri(new System.Uri("ms-appx:///Assets/pin_orange.png"));
             InitializeComponent();
         }
 
@@ -149,7 +155,8 @@ namespace ISSV.Views
                         var mapIcon = new MapIcon()
                         {
                             Location = geoPoint,
-                            NormalizedAnchorPoint = new Point(0.5, 1.0),
+                            Image = GetImage(location),
+                            NormalizedAnchorPoint = new Point(0.5, 0.7),
                             Title = location.Address.Name,
                             ZIndex = 0,
                             Tag = location,
@@ -197,6 +204,22 @@ namespace ISSV.Views
         private void CheckBox_Unchecked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             UpdateMapIcons();
+        }
+
+        private IRandomAccessStreamReference GetImage(Location location)
+        {
+            if (!location.Active)
+            {
+                return PinGray;
+            }
+            else if (location.RequiresMaintenances)
+            {
+                return PinRed;
+            }
+            else
+            {
+                return PinGreen;
+            }
         }
 
         private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)

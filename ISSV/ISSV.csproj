@@ -319,6 +319,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\map.png" />
+    <Content Include="Assets\pin_gray.png" />
+    <Content Include="Assets\pin_green.png" />
+    <Content Include="Assets\pin_orange.png" />
+    <Content Include="Assets\pin_red.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
