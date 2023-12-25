@@ -26,24 +26,24 @@
             </Grid.RowDefinitions>
 
             <TextBlock
+                x:Uid="Login_Title"
                 Grid.Row="0"
                 HorizontalAlignment="Center"
-                Style="{StaticResource SubtitleTextBlockStyle}"
-                Text="Login" />
+                Style="{StaticResource SubtitleTextBlockStyle}"/>
 
             <TextBox
+                x:Uid="Login_Username"
                 Text="{x:Bind UserName, Mode=TwoWay}"
                 Margin="{StaticResource SmallLeftTopRightBottomMargin}"
                 Grid.Row="1"
-                Width="200"
-                PlaceholderText="Username" />
+                Width="200" />
 
             <PasswordBox
+                x:Uid="Login_Password"
                 Password="{x:Bind Password, Mode=TwoWay}"
                 Margin="{StaticResource SmallLeftTopRightBottomMargin}"
                 Grid.Row="2"
-                Width="200"
-                PlaceholderText="Password" />
+                Width="200"/>
 
             <winui:InfoBar
                 Grid.Row="3"
@@ -62,10 +62,10 @@
                 Grid.Row="4"/>
 
             <Button
+                x:Uid="Login_Button"
                 Grid.Row="5"
                 HorizontalAlignment="Center"
                 Style="{StaticResource AccentButtonStyle}"
-                Content="Login"
                 Click="LoginButton_Click"/>
         </Grid>
     </Border>

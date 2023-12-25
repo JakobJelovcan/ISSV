@@ -66,7 +66,7 @@ namespace ISSV.Dialogs
             set { SetValue(ReasonProperty, value); }
         }
         public static readonly DependencyProperty ReasonProperty =
-            DependencyProperty.Register("Reason", typeof(string), typeof(MaintenanceContentDialog), new PropertyMetadata(false));
+            DependencyProperty.Register("Reason", typeof(string), typeof(MaintenanceContentDialog), new PropertyMetadata(string.Empty));
 
         public string WorkDone
         {

@@ -9,9 +9,8 @@
     mc:Ignorable="d"
     Style="{StaticResource DefaultContentDialogStyle}"
     Title="TITLE"
+    x:Uid="DeviceDialog"
     DefaultButton="Primary"
-    PrimaryButtonText="Confirm"
-    CloseButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     Width="500"
     Height="450">
@@ -22,37 +21,35 @@
         <StackPanel
             Spacing="10">
             <TextBox
-                Header="Device type"
+                x:Uid="DeviceDialog_DeviceType"
                 Text="{x:Bind DeviceType, Mode=TwoWay}" />
 
             <TextBox
-                Header="Serial number"
+                x:Uid="DeviceDialog_SerialNumber"
                 Text="{x:Bind SerialNumber, Mode=TwoWay}" />
 
             <winui:NumberBox
-                Header="Maintenance frequency"
+                x:Uid="DeviceDialog_MaintenanceFrequency"
                 Minimum="0"
-                PlaceholderText="Months"
                 SpinButtonPlacementMode="Inline"
                 SmallChange="1"
                 LargeChange="12"
                 Value="{x:Bind MaintenanceFrequency, Mode=TwoWay}" />
 
             <winui:NumberBox
-                Header="Warranty period"
+                x:Uid="DeviceDialog_WarrantyPeriod"
                 Minimum="0"
                 SpinButtonPlacementMode="Inline"
                 SmallChange="1"
                 LargeChange="12"
-                PlaceholderText="Months"
                 Value="{x:Bind WarrantyPeriod, Mode=TwoWay}" />
 
             <DatePicker
-                Header="Installation date"
+                x:Uid="DeviceDialog_InstallationDate"
                 Date="{x:Bind InstallationDate, Mode=TwoWay}" />
 
             <CheckBox
-                Content="Active"
+                x:Uid="DeviceDialog_Active"
                 IsEnabled="{x:Bind Location.Active, Mode=OneWay}"
                 IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>

@@ -6,6 +6,7 @@
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:headeredContols="using:CommunityToolkit.WinUI.Controls"
     xmlns:models="using:ISSV.Core.Models"
     xmlns:helpers="using:ISSV.Helpers"
     xmlns:local="using:ISSV.Views"
@@ -21,7 +22,7 @@
             VerticalAlignment="Top"
             Canvas.ZIndex="1">
             <AppBarButton
-                Label="Show all"
+                x:Uid="Map_ShowAll"
                 IsCompact="True"
                 Click="ShowAllButton_Click">
                 <AppBarButton.Icon>
@@ -29,7 +30,7 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
-                Label="Hide all"
+                x:Uid="Map_HideAll"
                 IsCompact="True"
                 Click="HideAllButton_Click">
                 <AppBarButton.Icon>
@@ -37,8 +38,8 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
+                x:Uid="Map_Filter"
                 Icon="Filter"
-                Label="Filter"
                 IsCompact="True"
                 Click="FilterButton_Click"/>
         </CommandBar>
@@ -72,5 +73,58 @@
                 Center="{x:Bind Center, Mode=OneWay}"
                 MapElementClick="MapControl_MapElementClick"/>
         </SplitView>
+
+        <winui:TeachingTip
+            x:Name="teachingTip"
+            IsLightDismissEnabled="True"
+            CloseButtonContent="Close"
+            ActionButtonClick="teachingTip_ActionButtonClick"
+            ActionButtonContent="Open location">
+            <StackPanel
+                Spacing="6">
+                <headeredContols:HeaderedContentControl>
+                    <headeredContols:HeaderedContentControl.Header>
+                        <TextBlock
+                            x:Uid="Map_Customer"
+                            Style="{StaticResource BaseTextBlockStyle}"/>
+                    </headeredContols:HeaderedContentControl.Header>
+                    <TextBlock
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind Location.Customer.Name, Mode=OneWay}" />
+                </headeredContols:HeaderedContentControl>
+                
+                <headeredContols:HeaderedContentControl>
+                    <headeredContols:HeaderedContentControl.Header>
+                        <TextBlock
+                            x:Uid="Map_PhoneNumber"
+                            Style="{StaticResource BaseTextBlockStyle}"/>
+                    </headeredContols:HeaderedContentControl.Header>
+                    <TextBlock
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind Location.PhoneNumber, Mode=OneWay}" />
+                </headeredContols:HeaderedContentControl>
+                <headeredContols:HeaderedContentControl>
+                    <headeredContols:HeaderedContentControl.Header>
+                        <TextBlock
+                            x:Uid="Map_Email"
+                            Style="{StaticResource BaseTextBlockStyle}"/>
+                    </headeredContols:HeaderedContentControl.Header>
+                    <TextBlock
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind Location.Email, Mode=OneWay}" />
+                </headeredContols:HeaderedContentControl>
+
+                <headeredContols:HeaderedContentControl>
+                    <headeredContols:HeaderedContentControl.Header>
+                        <TextBlock
+                            x:Uid="Map_NumOfRequiredServices"
+                            Style="{StaticResource BaseTextBlockStyle}"/>
+                    </headeredContols:HeaderedContentControl.Header>
+                    <TextBlock
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind Location.NumberOfRequiredMaintenances, Mode=OneWay}" />
+                </headeredContols:HeaderedContentControl>
+            </StackPanel>
+        </winui:TeachingTip>
     </Grid>
 </Page>

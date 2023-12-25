@@ -38,6 +38,13 @@ namespace ISSV.Views
             set { Set(ref _zoomLevel, value); }
         }
 
+        public Location Location
+        {
+            get => location;
+            set => Set(ref location, value);
+        }
+        private Location location;
+
         private Geopoint _center;
 
         private MapElementsLayer _layer;
@@ -193,7 +200,11 @@ namespace ISSV.Views
 
         private void MapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
         {
-
+            if (args.MapElements.Any() && args.MapElements.First().Tag is Location location)
+            {
+                Location = location;
+                teachingTip.IsOpen = true;
+            }
         }
 
         private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -219,6 +230,14 @@ namespace ISSV.Views
             else
             {
                 return PinGreen;
+            }
+        }
+
+        private void teachingTip_ActionButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
+        {
+            if (Location != null)
+            {
+                NavigationService.Navigate<LocationPage>(location);
             }
         }
 

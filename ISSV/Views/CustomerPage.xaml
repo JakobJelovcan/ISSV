@@ -48,8 +48,8 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Phone number"/>
+                                        x:Uid="Shell_PhoneNumber"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -61,8 +61,8 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Email"/>
+                                        x:Uid="Shell_Email"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -74,8 +74,8 @@
                                 Grid.Row="1">       
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Number of locations"/>
+                                        x:Uid="Shell_NumOfLocations"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -87,8 +87,8 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Number of devices"/>
+                                        x:Uid="Shell_NumOfDevices"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -101,18 +101,18 @@
                             DefaultLabelPosition="Right"
                             Background="Transparent">
                             <AppBarButton
+                                x:Uid="Shell_EditCommand"
                                 Icon="Edit"
-                                Label="Edit"
                                 IsCompact="True"
                                 Click="EditCustomerButton_Click" />
                             <AppBarButton
+                                x:Uid="Shell_DeleteCommand"
                                 Icon="Delete"
-                                Label="Delete"
                                 IsCompact="True"
                                 Click="DeleteCustomerButton_Click" />
                             <AppBarButton
+                                x:Uid="Shell_AddCommand"
                                 Icon="Add"
-                                Label="Add"
                                 IsCompact="True"
                                 Click="AddLocationButton_Click" />
                         </CommandBar>
@@ -125,12 +125,12 @@
                         <controls:LocationControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
+                                    x:Uid="Shell_EditContextItem"
                                     Icon="Edit"
-                                    Text="Edit"
                                     Click="EditLocationButton_Click" />
                                 <MenuFlyoutItem
+                                    x:Uid="Shell_DeleteContextItem"
                                     Icon="Delete"
-                                    Text="Delete"
                                     Click="DeleteLocationButton_Click" />
                             </MenuFlyout>
                         </controls:LocationControl.ContextFlyout>

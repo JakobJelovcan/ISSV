@@ -10,9 +10,8 @@
     mc:Ignorable="d"
     Style="{StaticResource DefaultContentDialogStyle}"
     Title="TITLE"
+    x:Uid="LocationDialog"
     DefaultButton="Primary"
-    PrimaryButtonText="Confirm"
-    CloseButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     Height="450"
     Width="500">
@@ -23,25 +22,25 @@
         <StackPanel
             Spacing="10">
             <TextBox
-                Header="Name"
+                x:Uid="LocationDialog_Location"
                 Text="{x:Bind LocationName, Mode=TwoWay}" />
 
             <AutoSuggestBox
-                Header="Address"
+                x:Uid="LocationDialog_Address"
                 ItemsSource="{x:Bind Addresses, Mode=OneWay}"
                 Text="{x:Bind Address, Mode=TwoWay}"
                 TextChanged="AutoSuggestBox_TextChanged" />
 
             <TextBox
-                Header="Phone number"
+                x:Uid="LocationDialog_PhoneNumber"
                 Text="{x:Bind PhoneNumber, Mode=TwoWay}" />
 
             <TextBox
-                Header="Email"
+                x:Uid="LocationDialog_Email"
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
             <CheckBox
-                Content="Active"
+                x:Uid="Shell_Active"
                 IsEnabled="{x:Bind Customer.Active, Mode=OneWay}"
                 IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>

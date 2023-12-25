@@ -137,6 +137,9 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
+      <Version>2.3.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
@@ -183,6 +186,9 @@
     <Compile Include="Services\ThemeSelectorService.cs" />
     <Compile Include="Views\CustomersPage.xaml.cs">
       <DependentUpon>CustomersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LocationPage.xaml.cs">
       <DependentUpon>LocationPage.xaml</DependentUpon>
@@ -273,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

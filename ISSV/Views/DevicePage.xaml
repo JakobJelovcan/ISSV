@@ -46,8 +46,8 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Serial number"/>
+                                        x:Uid="Shell_SerialNumber"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -60,8 +60,8 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Installation date"/>
+                                        x:Uid="Shell_InstallationDate"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -74,8 +74,8 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Warranty period"/>
+                                        x:Uid="Shell_WarrantyPeriod"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -88,8 +88,8 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        Style="{StaticResource DetailSubTitleStyle}"
-                                        Text="Maintenance frequency"/>
+                                        x:Uid="Shell_MaintenanceFrequency"
+                                        Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
                                     Style="{StaticResource DetailBodyBaseMediumStyle}"
@@ -103,18 +103,18 @@
                             DefaultLabelPosition="Right"
                             Background="Transparent">
                             <AppBarButton
+                                x:Uid="Shell_EditCommand"
                                 Icon="Edit"
-                                Label="Edit"
                                 IsCompact="True"
                                 Click="EditDeviceButton_Click" />
                             <AppBarButton
+                                x:Uid="Shell_DeleteCommand"
                                 Icon="Delete"
-                                Label="Delete"
                                 IsCompact="True"
                                 Click="DeleteDeviceButton_Click" />
                             <AppBarButton
+                                x:Uid="Shell_AddCommand"
                                 Icon="Add"
-                                Label="Add"
                                 IsCompact="True"
                                 Click="AddMaintenanceButton_Click" />
                         </CommandBar>
@@ -128,12 +128,12 @@
                         <controls:MaintenanceControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
+                                    x:Uid="Shell_EditContextItem"
                                     Icon="Edit"
-                                    Text="Edit"
                                     Click="EditMaintenanceButton_Click" />
                                 <MenuFlyoutItem
+                                    x:Uid="Shell_DeleteContextItem"
                                     Icon="Delete"
-                                    Text="Delete"
                                     Click="DeleteMaintenanceButton_Click" />
                             </MenuFlyout>
                         </controls:MaintenanceControl.ContextFlyout>

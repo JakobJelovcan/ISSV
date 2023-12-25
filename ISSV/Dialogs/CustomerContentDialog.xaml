@@ -9,8 +9,7 @@
     mc:Ignorable="d"
     Title="TITLE"
     DefaultButton="Primary"
-    PrimaryButtonText="Confirm"
-    CloseButtonText="Cancel"
+    x:Uid="CustomerDialog"
     Style="{StaticResource DefaultContentDialogStyle}"
     Height="450"
     Width="500"
@@ -21,19 +20,19 @@
         <StackPanel
             Spacing="10">
             <TextBox
-                Header="Customer name"
+                x:Uid="CustomerDialog_Customer"
                 Text="{x:Bind CustomerName, Mode=TwoWay}" />
             
             <TextBox
-                Header="Phone number"
+                x:Uid="CustomerDialog_PhoneNumber"
                 Text="{x:Bind PhoneNumber, Mode=TwoWay}" />
 
             <TextBox
-                Header="Email"
+                x:Uid="CustomerDialog_Email"
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
             <CheckBox
-                Content="Active"
+                x:Uid="CustomerDialog_Active"
                 IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>
     </Grid>
