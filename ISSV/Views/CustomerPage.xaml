@@ -48,7 +48,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_PhoneNumber"
+                                        x:Uid="Customer_PhoneNumber"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -61,7 +61,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_Email"
+                                        x:Uid="Customer_Email"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -74,7 +74,7 @@
                                 Grid.Row="1">       
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_NumOfLocations"
+                                        x:Uid="Customer_NumOfLocations"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -87,7 +87,7 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_NumOfDevices"
+                                        x:Uid="Customer_NumOfDevices"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -101,17 +101,17 @@
                             DefaultLabelPosition="Right"
                             Background="Transparent">
                             <AppBarButton
-                                x:Uid="Shell_EditCommand"
+                                x:Uid="Customer_EditCommand"
                                 Icon="Edit"
                                 IsCompact="True"
                                 Click="EditCustomerButton_Click" />
                             <AppBarButton
-                                x:Uid="Shell_DeleteCommand"
+                                x:Uid="Customer_DeleteCommand"
                                 Icon="Delete"
                                 IsCompact="True"
                                 Click="DeleteCustomerButton_Click" />
                             <AppBarButton
-                                x:Uid="Shell_AddCommand"
+                                x:Uid="Customer_AddCommand"
                                 Icon="Add"
                                 IsCompact="True"
                                 Click="AddLocationButton_Click" />
@@ -125,11 +125,11 @@
                         <controls:LocationControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_EditContextItem"
+                                    x:Uid="Customer_EditMenuItem"
                                     Icon="Edit"
                                     Click="EditLocationButton_Click" />
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_DeleteContextItem"
+                                    x:Uid="Customer_DeleteMenuItem"
                                     Icon="Delete"
                                     Click="DeleteLocationButton_Click" />
                             </MenuFlyout>

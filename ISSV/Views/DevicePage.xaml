@@ -46,7 +46,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_SerialNumber"
+                                        x:Uid="Device_SerialNumber"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -60,7 +60,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_InstallationDate"
+                                        x:Uid="Device_InstallationDate"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -74,7 +74,7 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_WarrantyPeriod"
+                                        x:Uid="Device_WarrantyPeriod"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -88,7 +88,7 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_MaintenanceFrequency"
+                                        x:Uid="Device_MaintenanceFrequency"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -103,17 +103,17 @@
                             DefaultLabelPosition="Right"
                             Background="Transparent">
                             <AppBarButton
-                                x:Uid="Shell_EditCommand"
+                                x:Uid="Device_EditCommand"
                                 Icon="Edit"
                                 IsCompact="True"
                                 Click="EditDeviceButton_Click" />
                             <AppBarButton
-                                x:Uid="Shell_DeleteCommand"
+                                x:Uid="Device_DeleteCommand"
                                 Icon="Delete"
                                 IsCompact="True"
                                 Click="DeleteDeviceButton_Click" />
                             <AppBarButton
-                                x:Uid="Shell_AddCommand"
+                                x:Uid="Device_AddCommand"
                                 Icon="Add"
                                 IsCompact="True"
                                 Click="AddMaintenanceButton_Click" />
@@ -128,11 +128,11 @@
                         <controls:MaintenanceControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_EditContextItem"
+                                    x:Uid="Device_EditContextItem"
                                     Icon="Edit"
                                     Click="EditMaintenanceButton_Click" />
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_DeleteContextItem"
+                                    x:Uid="Device_DeleteContextItem"
                                     Icon="Delete"
                                     Click="DeleteMaintenanceButton_Click" />
                             </MenuFlyout>

@@ -47,7 +47,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_PhoneNumber"
+                                        x:Uid="Location_PhoneNumber"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -61,7 +61,7 @@
                                 Grid.Row="0">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_Address"
+                                        x:Uid="Location_Address"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -75,7 +75,7 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_Email"
+                                        x:Uid="Location_Email"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -89,7 +89,7 @@
                                 Grid.Row="1">
                                 <headeredContols:HeaderedContentControl.Header>
                                     <TextBlock
-                                        x:Uid="Shell_NumOfDevices"
+                                        x:Uid="Location_NumOfDevices"
                                         Style="{StaticResource DetailSubTitleStyle}"/>
                                 </headeredContols:HeaderedContentControl.Header>
                                 <TextBlock
@@ -104,17 +104,17 @@
                             DefaultLabelPosition="Right"
                             Background="Transparent">
                             <AppBarButton
-                                x:Uid="Shell_EditCommand"
+                                x:Uid="Location_EditCommand"
                                 Icon="Edit"
                                 IsCompact="True"
                                 Click="EditLocationButton_Click"/>
                             <AppBarButton
-                                x:Uid="Shell_DeleteCommand"
+                                x:Uid="Location_DeleteCommand"
                                 Icon="Delete"
                                 IsCompact="True"
                                 Click="DeleteLocationButton_Click"/>
                             <AppBarButton
-                                x:Uid="Shell_AddCommand"
+                                x:Uid="Location_AddCommand"
                                 Icon="Add"
                                 IsCompact="True"
                                 Click="AddDeviceButton_Click"/>    
@@ -128,11 +128,11 @@
                         <controls:DeviceControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_EditContextItem"
+                                    x:Uid="Location_EditContextItem"
                                     Icon="Edit"
                                     Click="EditDeviceButton_Click" />
                                 <MenuFlyoutItem
-                                    x:Uid="Shell_DeleteContextItem"
+                                    x:Uid="Location_DeleteContextItem"
                                     Icon="Delete"
                                     Click="DeleteDeviceButton_Click" />
                             </MenuFlyout>

@@ -347,6 +347,7 @@
     <None Include="App.config" />
     <None Include="ISSV_TemporaryKey.pfx" />
     <None Include="README.md" />
+    <PRIResource Include="Strings\sl-SI\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -360,6 +361,7 @@
       <Name>ISSV.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -22,7 +22,7 @@
                         DefaultLabelPosition="Right"
                         Background="Transparent">
                         <AppBarButton
-                            x:Uid="Shell_AddCommand"
+                            x:Uid="Customers_AddCommand"
                             Icon="Add"
                             IsCompact="True"
                             Click="AddCustomerButton_Click" />
@@ -35,11 +35,11 @@
                         <controls:CustomerControl.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
-                                        x:Uid="Shell_EditContextItem"
+                                        x:Uid="Customers_EditContextItem"
                                         Icon="Edit"
                                         Click="EditMenuFlyoutItem_Click"/>
                                     <MenuFlyoutItem
-                                        x:Uid="Shell_DeleteContextItem"
+                                        x:Uid="Customers_DeleteContextItem"
                                         Icon="Delete"
                                         Click="DeleteMenuFlyoutItem_Click" />
                                 </MenuFlyout>

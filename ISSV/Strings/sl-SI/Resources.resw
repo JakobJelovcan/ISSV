@@ -126,19 +126,19 @@
     <comment>Application description</comment>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>Choose Theme</value>
+    <value>Izberi temo</value>
     <comment>Choose theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>Temna</value>
     <comment>Dark theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>Windows default</value>
+    <value>Privzeta</value>
     <comment>Windows default theme text for Settings</comment>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>Svetla</value>
     <comment>Light theme text for Settings</comment>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
@@ -158,275 +158,275 @@
     <comment>Here is your Privacy Statement url for Settings</comment>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
+    <value>Prilagoditev</value>
     <comment>Personalization text for Settings</comment>
   </data>
   <data name="Shell_Home.Content" xml:space="preserve">
-    <value>Home</value>
+    <value>Domov</value>
     <comment>Navigation view item name for Home</comment>
   </data>
   <data name="CustomerDialog.CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Prekliči</value>
   </data>
   <data name="CustomerDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potrdi</value>
   </data>
   <data name="CustomerDialog_Active.Content" xml:space="preserve">
-    <value>Active</value>
+    <value>Aktivna</value>
   </data>
   <data name="CustomerDialog_Customer.Header" xml:space="preserve">
-    <value>Customer</value>
+    <value>Stranka</value>
   </data>
   <data name="CustomerDialog_Email.Header" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pošta</value>
   </data>
   <data name="CustomerDialog_PhoneNumber.Header" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Telefonska številka</value>
   </data>
   <data name="DeleteDialog.CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Prekliči</value>
   </data>
   <data name="DeleteDialog.Content" xml:space="preserve">
-    <value>Do you really want to delete this item?</value>
+    <value>Ali res želite odstraniti ta element?</value>
   </data>
   <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potrdi</value>
   </data>
   <data name="DeleteDialog.Title" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="DeviceDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Zapri</value>
   </data>
   <data name="DeviceDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potrdi</value>
   </data>
   <data name="DeviceDialog_Active.Content" xml:space="preserve">
-    <value>Active</value>
+    <value>Aktivna</value>
   </data>
   <data name="DeviceDialog_DeviceType.Header" xml:space="preserve">
-    <value>Device type</value>
+    <value>Tip naprave</value>
   </data>
   <data name="DeviceDialog_InstallationDate.Header" xml:space="preserve">
-    <value>Installation date</value>
+    <value>Datum namestitve</value>
   </data>
   <data name="DeviceDialog_MaintenanceFrequency.Header" xml:space="preserve">
-    <value>Maintenance frequency</value>
+    <value>Frekvenca vzdrževanja</value>
   </data>
   <data name="DeviceDialog_MaintenanceFrequency.PlaceholderText" xml:space="preserve">
-    <value>Months</value>
+    <value>Meseci</value>
   </data>
   <data name="DeviceDialog_SerialNumber.Header" xml:space="preserve">
-    <value>Serial number</value>
+    <value>Serijska številka</value>
   </data>
   <data name="DeviceDialog_WarrantyPeriod.Header" xml:space="preserve">
-    <value>Warranty period</value>
+    <value>Dolžina garancije</value>
   </data>
   <data name="DeviceDialog_WarrantyPeriod.PlaceholderText" xml:space="preserve">
-    <value>Months</value>
+    <value>Meseci</value>
   </data>
   <data name="Home_DeviceAge.Text" xml:space="preserve">
-    <value>Device age</value>
+    <value>Starost naprave</value>
   </data>
   <data name="Home_DeviceStatus.Text" xml:space="preserve">
-    <value>Device status</value>
+    <value>Status naprave</value>
   </data>
   <data name="Home_PerformedMaintenances.Text" xml:space="preserve">
-    <value>Performed maintenances</value>
+    <value>Izvedena vzdrževanja</value>
   </data>
   <data name="Home_RegularMaintenances.Text" xml:space="preserve">
-    <value>Regular maintenances</value>
+    <value>Redna vzdrževanja</value>
   </data>
   <data name="LocationDialog.CloseButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Prekliči</value>
   </data>
   <data name="LocationDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potrdi</value>
   </data>
   <data name="LocationDialog_Active.Content" xml:space="preserve">
-    <value>Active</value>
+    <value>Aktivna</value>
   </data>
   <data name="LocationDialog_Address.Header" xml:space="preserve">
-    <value>Address</value>
+    <value>Naslov</value>
   </data>
   <data name="LocationDialog_Email.Header" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pošta</value>
   </data>
   <data name="LocationDialog_Location.Header" xml:space="preserve">
-    <value>Location name</value>
+    <value>Ime lokacije</value>
   </data>
   <data name="LocationDialog_PhoneNumber.Header" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Telefonska številka</value>
   </data>
   <data name="Login_Button.Content" xml:space="preserve">
-    <value>Login</value>
+    <value>Vpis</value>
   </data>
   <data name="Login_Password.PlaceholderText" xml:space="preserve">
-    <value>Password</value>
+    <value>Geslo</value>
   </data>
   <data name="Login_Title.Text" xml:space="preserve">
-    <value>Login</value>
+    <value>Vpis</value>
   </data>
   <data name="Login_Username.PlaceholderText" xml:space="preserve">
-    <value>Username</value>
+    <value>Uporabniško ime</value>
   </data>
   <data name="MaintenanceDialog.CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Zapri</value>
   </data>
   <data name="MaintenanceDialog.PrimaryButtonText" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potrdi</value>
   </data>
   <data name="MaintenanceDialog_Date.Header" xml:space="preserve">
-    <value>Date</value>
+    <value>Datum</value>
   </data>
   <data name="MaintenanceDialog_Notes.Header" xml:space="preserve">
-    <value>Notes</value>
+    <value>Zapiski</value>
   </data>
   <data name="MaintenanceDialog_Reason.Header" xml:space="preserve">
-    <value>Reason</value>
+    <value>Vzrok</value>
   </data>
   <data name="MaintenanceDialog_RegularMaintenance.Content" xml:space="preserve">
-    <value>Regular maintenance</value>
+    <value>Redno vzdrževanje</value>
   </data>
   <data name="MaintenanceDialog_Repairman.Header" xml:space="preserve">
-    <value>Repairman</value>
+    <value>Vzdrževalec</value>
   </data>
   <data name="MaintenanceDialog_WorkDone.Header" xml:space="preserve">
-    <value>Work done</value>
+    <value>Opravljeno delo</value>
   </data>
   <data name="MaintenanceDialog_WorkOrder.Header" xml:space="preserve">
-    <value>Work order</value>
+    <value>Opravljeno delo</value>
   </data>
   <data name="Map_Customer.Text" xml:space="preserve">
-    <value>Customer</value>
+    <value>Stranka</value>
   </data>
   <data name="Map_Email.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pošta</value>
   </data>
   <data name="Map_Filter.Label" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="Map_HideAll.Label" xml:space="preserve">
-    <value>Hide all</value>
+    <value>Skrij vse</value>
   </data>
   <data name="Map_NumOfRequiredServices.Text" xml:space="preserve">
-    <value>Number of required services</value>
+    <value>Število potrebnih servisov</value>
   </data>
   <data name="Map_PhoneNumber.Text" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Telefonska številka</value>
   </data>
   <data name="Map_ShowAll.Label" xml:space="preserve">
-    <value>Show all</value>
+    <value>Pokaži vse</value>
   </data>
   <data name="Location_Address.Text" xml:space="preserve">
-    <value>Address</value>
+    <value>Naslov</value>
   </data>
   <data name="Location_Email.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pošta</value>
   </data>
   <data name="Device_InstallationDate.Text" xml:space="preserve">
-    <value>Installation date</value>
+    <value>Datum namestitve</value>
   </data>
   <data name="Maintenance_MaintenanceDate.Text" xml:space="preserve">
-    <value>Maintenance date</value>
+    <value>Datum vzdrževanja</value>
   </data>
   <data name="Device_MaintenanceFrequency.Text" xml:space="preserve">
-    <value>Maintenance frequency</value>
+    <value>Frekvenca vzdrževanja</value>
   </data>
   <data name="Maintenance_MaintenanceNotes.Text" xml:space="preserve">
-    <value>Maintenance notes</value>
+    <value>Zapiski</value>
   </data>
   <data name="Maintenance_MaintenanceReason.Text" xml:space="preserve">
-    <value>Maintenance reason</value>
+    <value>Vzrok</value>
   </data>
   <data name="Location_NumOfDevices.Text" xml:space="preserve">
-    <value>Number of devices</value>
+    <value>Število naprav</value>
   </data>
   <data name="Location_PhoneNumber.Text" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Telefonska številka</value>
   </data>
   <data name="Maintenance_Repairman.Text" xml:space="preserve">
-    <value>Repairman</value>
+    <value>Vzdrževalec</value>
   </data>
   <data name="Device_SerialNumber.Text" xml:space="preserve">
-    <value>Serial number</value>
+    <value>Serijska številka</value>
   </data>
   <data name="Device_WarrantyPeriod.Text" xml:space="preserve">
-    <value>Warranty period</value>
+    <value>Dolžina garancije</value>
   </data>
   <data name="Maintenance_WorkDone.Text" xml:space="preserve">
-    <value>Work done</value>
+    <value>Opravljeno delo</value>
   </data>
   <data name="Maintenance_WorkOrder.Text" xml:space="preserve">
-    <value>Work order</value>
+    <value>Opravljeno delo</value>
   </data>
   <data name="Customers_AddCommand.Label" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="Customers_DeleteMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Customers_EditMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Customer_AddCommand.Label" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="Customer_DeleteCommand.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Customer_DeleteMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Customer_EditCommand.Label" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Customer_EditMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Customer_Email.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pošta</value>
   </data>
   <data name="Customer_NumOfDevices.Text" xml:space="preserve">
-    <value>Number of devices</value>
+    <value>Število naprav</value>
   </data>
   <data name="Customer_NumOfLocations.Text" xml:space="preserve">
-    <value>Number of locations</value>
+    <value>Število lokacij</value>
   </data>
   <data name="Customer_PhoneNumber.Text" xml:space="preserve">
-    <value>Phone number</value>
+    <value>Telefonska številka</value>
   </data>
   <data name="Device_AddCommand.Label" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="Device_DeleteCommand.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Device_DeleteMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Device_EditCommand.Label" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Device_EditMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Location_AddCommand.Label" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="Location_DeleteCommand.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Location_DeleteMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Odstrani</value>
   </data>
   <data name="Location_EditCommand.Label" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Location_EditMenuItem.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Uredi</value>
   </data>
   <data name="Shell_Customers.Content" xml:space="preserve">
-    <value>Customers</value>
+    <value>Stranke</value>
   </data>
 </root>
