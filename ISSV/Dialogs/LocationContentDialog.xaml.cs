@@ -1,4 +1,6 @@
-﻿using ISSV.Core.Models;
+﻿using CommunityToolkit.Common;
+using CommunityToolkit.WinUI;
+using ISSV.Core.Models;
 using ISSV.Core.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -26,35 +28,42 @@ namespace ISSV.Dialogs
                 PhoneNumber = Location.PhoneNumber;
                 Email = Location.Email;
                 Active = Location.Active;
-                Title = "Edit location";
+                Title = "LocationDialog_TitleEdit".GetLocalized();
             }
             else
             {
-                Title = "Create location";
+                Title = "LocationDialog_TitleCreate".GetLocalized();
                 Active = true;
             }
         }
 
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            var deferral = args.GetDeferral();
             var address = DataService.Addresses.Where(a => a.Name == Address).FirstOrDefault() ?? await CreateAddress(Address);
             if (address is null)
             {
-                //TODO: Warning
+                addressInfoBar.IsOpen = true;
+                args.Cancel = true;
+                return;
+            }
+            else
+            {
+                addressInfoBar.IsOpen = false;
             }
 
             if (Location is null)
             {
-                Location = new Location(Customer, Name, address, PhoneNumber, Email, Active);
+                Location = new Location(Customer, LocationName, address, PhoneNumber, Email, Active);
                 Customer.AddLocation(Location);
                 DataService.Locations.Add(Location);
             }
             else
             {
-                Location.Update(Name, address, PhoneNumber, Email, Active);
+                Location.Update(LocationName, address, PhoneNumber, Email, Active);
             }
-
             await DataService.SaveChangesAsync();
+            deferral.Complete();
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

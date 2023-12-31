@@ -1,5 +1,6 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Helpers;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,11 +24,11 @@ namespace ISSV.Dialogs
                 MaintenanceFrequency = device.MaintenanceFrequency;
                 WarrantyPeriod = device.WarrantyPeriod;
                 InstallationDate = device.InstallationDate;
-                Title = "Edit device";
+                Title = "DeviceDialog_TitleEdit".GetLocalized();
             }
             else
             {
-                Title = "Create device";
+                Title = "DeviceDialog_TitleCreate".GetLocalized();
                 Active = true;
             }
         }

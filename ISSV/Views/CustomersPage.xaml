@@ -35,11 +35,11 @@
                         <controls:CustomerControl.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
-                                        x:Uid="Customers_EditContextItem"
+                                        x:Uid="Customers_EditMenuItem"
                                         Icon="Edit"
                                         Click="EditMenuFlyoutItem_Click"/>
                                     <MenuFlyoutItem
-                                        x:Uid="Customers_DeleteContextItem"
+                                        x:Uid="Customers_DeleteMenuItem"
                                         Icon="Delete"
                                         Click="DeleteMenuFlyoutItem_Click" />
                                 </MenuFlyout>

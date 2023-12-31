@@ -1,5 +1,6 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -19,11 +20,11 @@ namespace ISSV.Dialogs
                 PhoneNumber = Customer.PhoneNumber;
                 Email = Customer.Email;
                 Active = Customer.Active;
-                Title = "Edit customer";
+                Title = "CustomerDialog_TitleEdit".GetLocalized();
             }
             else
             {
-                Title = "Create customer";
+                Title = "CustomerDialog_TitleCreate".GetLocalized();
                 Active = true;
             }
         }
@@ -32,12 +33,12 @@ namespace ISSV.Dialogs
         {
             if (Customer is null)
             {
-                Customer = new Customer(Name, PhoneNumber, Email, Active);
+                Customer = new Customer(CustomerName, PhoneNumber, Email, Active);
                 DataService.Customers.Add(Customer);
             }
             else
             {
-                Customer.Update(Name, PhoneNumber, Email, Active);
+                Customer.Update(CustomerName, PhoneNumber, Email, Active);
             }
             await DataService.SaveChangesAsync();
         }

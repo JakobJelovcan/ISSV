@@ -2,6 +2,7 @@
 using System;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Services.Maps;
 using Windows.UI.Xaml;
 
 namespace ISSV
@@ -22,6 +23,7 @@ namespace ISSV
 
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
+            MapService.ServiceToken = "Kpch28g23Cnw6xNVbP7t~SATgK5XNhqcC5ZyUiA51BA~Akzl5DFqB3j9vskTvi1Qy8hYsX-G27CZSnfBO3LaStB-QQAqKLB6n0eYZCblPBr4";
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)

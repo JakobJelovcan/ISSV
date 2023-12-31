@@ -1,5 +1,6 @@
 ﻿using ISSV.Core.Models;
 using ISSV.Core.Services;
+using ISSV.Helpers;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,11 +25,11 @@ namespace ISSV.Dialogs
                 WorkOrder = Maintenance.WorkOrder;
                 Repairman = Maintenance.Repairman;
                 RegularMaintenance = Maintenance.RegularMaintenance;
-                Title = "Edit maintenance";
+                Title = "MaintenanceDialog_TitleEdit".GetLocalized();
             }
             else
             {
-                Title = "Create maintenance";
+                Title = "MaintenanceDialog_TitleCreate".GetLocalized();
                 RegularMaintenance = true;
             }
         }

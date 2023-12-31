@@ -429,4 +429,31 @@
   <data name="Shell_Customers.Content" xml:space="preserve">
     <value>Stranke</value>
   </data>
+  <data name="CustomerDialog_TitleCreate" xml:space="preserve">
+    <value>Ustvari stranko</value>
+  </data>
+  <data name="CustomerDialog_TitleEdit" xml:space="preserve">
+    <value>Uredi stranko</value>
+  </data>
+  <data name="DeviceDialog_TitleCreate" xml:space="preserve">
+    <value>Ustvari napravo</value>
+  </data>
+  <data name="DeviceDialog_TitleEdit" xml:space="preserve">
+    <value>Uredi napravo</value>
+  </data>
+  <data name="LocationDialog_AddressError.Message" xml:space="preserve">
+    <value>Koordinate za ta naslov niso bile najdene.</value>
+  </data>
+  <data name="LocationDialog_TitleCreate" xml:space="preserve">
+    <value>Ustvari lokacijo</value>
+  </data>
+  <data name="LocationDialog_TitleEdit" xml:space="preserve">
+    <value>Uredi lokacijo</value>
+  </data>
+  <data name="MaintenanceDialog_TitleCreate" xml:space="preserve">
+    <value>Ustvari vzdrževanje</value>
+  </data>
+  <data name="MaintenanceDialog_TitleEdit" xml:space="preserve">
+    <value>Uredi vzdrževanje</value>
+  </data>
 </root>

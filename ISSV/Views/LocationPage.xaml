@@ -128,11 +128,11 @@
                         <controls:DeviceControl.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
-                                    x:Uid="Location_EditContextItem"
+                                    x:Uid="Location_EditMenuItem"
                                     Icon="Edit"
                                     Click="EditDeviceButton_Click" />
                                 <MenuFlyoutItem
-                                    x:Uid="Location_DeleteContextItem"
+                                    x:Uid="Location_DeleteMenuItem"
                                     Icon="Delete"
                                     Click="DeleteDeviceButton_Click" />
                             </MenuFlyout>

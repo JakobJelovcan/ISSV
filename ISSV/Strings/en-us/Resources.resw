@@ -429,4 +429,31 @@
   <data name="Shell_Customers.Content" xml:space="preserve">
     <value>Customers</value>
   </data>
+  <data name="CustomerDialog_TitleCreate" xml:space="preserve">
+    <value>Create customer</value>
+  </data>
+  <data name="CustomerDialog_TitleEdit" xml:space="preserve">
+    <value>Edit customer</value>
+  </data>
+  <data name="DeviceDialog_TitleCreate" xml:space="preserve">
+    <value>Create device</value>
+  </data>
+  <data name="DeviceDialog_TitleEdit" xml:space="preserve">
+    <value>Edit device</value>
+  </data>
+  <data name="LocationDialog_AddressError.Message" xml:space="preserve">
+    <value>The coordinates for this address cannot be found.</value>
+  </data>
+  <data name="LocationDialog_TitleCreate" xml:space="preserve">
+    <value>Create location</value>
+  </data>
+  <data name="LocationDialog_TitleEdit" xml:space="preserve">
+    <value>Edit location</value>
+  </data>
+  <data name="MaintenanceDialog_TitleCreate" xml:space="preserve">
+    <value>Create maintenance</value>
+  </data>
+  <data name="MaintenanceDialog_TitleEdit" xml:space="preserve">
+    <value>Edit maintenance</value>
+  </data>
 </root>

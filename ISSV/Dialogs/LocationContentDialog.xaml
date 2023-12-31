@@ -21,6 +21,12 @@
         Width="480">
         <StackPanel
             Spacing="10">
+            <winui:InfoBar
+                x:Name="addressInfoBar"
+                Severity="Error"
+                MaxWidth="480"
+                IsClosable="False"
+                x:Uid="LocationDialog_AddressError"/>
             <TextBox
                 x:Uid="LocationDialog_Location"
                 Text="{x:Bind LocationName, Mode=TwoWay}" />
@@ -40,7 +46,7 @@
                 Text="{x:Bind Email, Mode=TwoWay}" />
 
             <CheckBox
-                x:Uid="Shell_Active"
+                x:Uid="LocationDialog_Active"
                 IsEnabled="{x:Bind Customer.Active, Mode=OneWay}"
                 IsChecked="{x:Bind Active, Mode=TwoWay}" />
         </StackPanel>

@@ -72,6 +72,11 @@ namespace ISSV.Core.Services
             await ((RelationalDatabaseCreator)mySqlDataService.Database.GetService<IDatabaseCreator>()).EnsureCreatedAsync();
         }
 
+        public static void SaveChanges()
+        {
+            mySqlDataService.SaveChanges();
+        }
+
         public static async Task SaveChangesAsync()
         {
             await mySqlDataService.SaveChangesAsync();
