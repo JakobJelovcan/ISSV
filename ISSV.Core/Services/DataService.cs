@@ -44,7 +44,8 @@ namespace ISSV.Core.Services
                 Port = 3306,
                 Server = "192.168.1.254",
                 Database = "issv",
-                SslMode = MySqlSslMode.None
+                SslMode = MySqlSslMode.None,
+                AllowPublicKeyRetrieval = true,
             };
             try
             {

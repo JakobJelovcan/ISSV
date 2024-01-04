@@ -116,13 +116,13 @@ namespace ISSV.Core.Models
         public void AddLocation(Location location)
         {
             Locations.Add(location);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfLocations), nameof(NumberOfDevices), nameof(NumberOfRequiredMaintenances), nameof(RequiresMaintenances));
         }
 
         internal void RemoveLocation(Location location)
         {
             Locations.Remove(location);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfLocations), nameof(NumberOfDevices), nameof(NumberOfRequiredMaintenances), nameof(RequiresMaintenances));
         }
 
         public void Update(string name, string phoneNumber, string email, bool active)

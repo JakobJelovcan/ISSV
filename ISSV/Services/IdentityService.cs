@@ -7,7 +7,6 @@ namespace ISSV.Services
     public class IdentityService
     {
         public event EventHandler LoggedIn;
-        public event EventHandler LoggedOut;
 
         public async Task<bool> LogInAsync(string username, string password)
         {

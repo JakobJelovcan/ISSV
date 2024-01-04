@@ -146,13 +146,13 @@ namespace ISSV.Core.Models
         public void AddMaintenance(Maintenance maintenance)
         {
             Maintenances.Add(maintenance);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfMaintenances), nameof(LastMaintenance), nameof(RequiresMaintenance));
         }
 
         public void RemoveMaintenance(Maintenance maintenance)
         {
             Maintenances.Remove(maintenance);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfMaintenances), nameof(LastMaintenance), nameof(RequiresMaintenance));
         }
 
         public void Update(string deviceType, string serialNumber, bool active, int maintenanceFrequency, int warrantyPeriod, DateTimeOffset installationDate)

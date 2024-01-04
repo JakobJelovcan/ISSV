@@ -131,13 +131,13 @@ namespace ISSV.Core.Models
         public void AddDevice(Device device)
         {
             Devices.Add(device);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfDevices), nameof(NumberOfRequiredMaintenances), nameof(RequiresMaintenances));
         }
 
         internal void RemoveDevice(Device device)
         {
             Devices.Remove(device);
-            //TODO: Raise property changed
+            RaisePropertyChanged(nameof(NumberOfDevices), nameof(NumberOfRequiredMaintenances), nameof(RequiresMaintenances));
         }
 
         public void Update(string name, Address address, string phoneNumber, string email, bool active)
